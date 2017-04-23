@@ -21,5 +21,11 @@ module.exports = Object.freeze({
         PLAY_MODE : '_PLAY_MODE',
         RESUME_DECISION_MODE : '_RESUME_DECISION_MODE',
         CHANGE_INSTR : "_CHANGE_INSTR"
+    },
+
+    instruments : {
+        PIANO : "PIANO",
+        VIOLIN : "VIOLIN",
+        GUITAR : "GUITAR"
     }
 });
