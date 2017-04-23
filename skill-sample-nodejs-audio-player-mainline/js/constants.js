@@ -20,9 +20,6 @@ module.exports = Object.freeze({
         START_MODE : '',
         PLAY_MODE : '_PLAY_MODE',
         RESUME_DECISION_MODE : '_RESUME_DECISION_MODE',
-        PLAY_NOTE : "_PLAY_NOTE",
-        PLAY_CHORD : "_PLAY_CHORD",
-        CHANGE_INSTR : "_CHANGE_INSTR",
-        MAIN_MENU : "_MAIN_MENU"
+        CHANGE_INSTR : "_CHANGE_INSTR"
     }
 });
