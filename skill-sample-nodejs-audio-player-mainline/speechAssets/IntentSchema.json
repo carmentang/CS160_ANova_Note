@@ -4,6 +4,15 @@
       "intent": "PlayAudio"
     },
     {
+      "intent": "PlayChord"
+    },
+    {
+      "intent": "PlayNote"
+    },
+    {
+      "intent": "ChangeInstrument"
+    },
+    {
       "intent": "AMAZON.PauseIntent"
     },
     {
