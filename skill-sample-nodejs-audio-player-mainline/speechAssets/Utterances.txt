@@ -13,4 +13,18 @@ PlayAudio to start podcast
 PlayAudio to start the podcast
 PlayAudio to start playing the podcast
 PlayAudio to play the podcast
-
+PlayNote play an a note
+PlayNote play a b note
+PlayNote play a c note
+PlayNote play a d note
+PlayNote play a e note
+PlayNote play an f note
+PlayNote play a g note
+PlayChord play an a chord
+PlayChord play a b chord
+PlayChord play a c chord
+PlayChord play a d chord
+PlayChord play a e chord
+PlayChord play an f chord
+Playchord play a g chord
+ChangeInstrument i want to change the instrument  
