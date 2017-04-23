@@ -19,6 +19,10 @@ module.exports = Object.freeze({
     states : {
         START_MODE : '',
         PLAY_MODE : '_PLAY_MODE',
-        RESUME_DECISION_MODE : '_RESUME_DECISION_MODE'
+        RESUME_DECISION_MODE : '_RESUME_DECISION_MODE',
+        PLAY_NOTE : "_PLAY_NOTE",
+        PLAY_CHORD : "_PLAY_CHORD",
+        CHANGE_INSTR : "_CHANGE_INSTR",
+        MAIN_MENU : "_MAIN_MENU"
     }
 });
