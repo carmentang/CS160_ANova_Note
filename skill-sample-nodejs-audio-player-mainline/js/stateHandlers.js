@@ -3,7 +3,12 @@
 var Alexa = require('alexa-sdk');
 var audioData = require('./audioAssets');
 var constants = require('./constants');
+
 // OUR CHANGES
+// To be used as noteName + num, where num is 1, 2, ...
+var noteName = "Note "
+var chordName = "Chord "
+
 var instrument = 0;
 var octave = 0;
 
@@ -27,7 +32,7 @@ var stateHandlers = {
 
             // OUR CHANGES
             instrument = constants.instruments.PIANO;
-            octave = 3;
+            octave = 2;
 
             //  Change state to START_MODE
             this.handler.state = constants.states.START_MODE;
