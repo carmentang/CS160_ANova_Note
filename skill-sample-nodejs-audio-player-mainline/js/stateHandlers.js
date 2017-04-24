@@ -3,6 +3,9 @@
 var Alexa = require('alexa-sdk');
 var audioData = require('./audioAssets');
 var constants = require('./constants');
+// OUR CHANGES
+var instrument;
+var octave;
 
 var stateHandlers = {
     startModeIntentHandlers : Alexa.CreateStateHandler(constants.states.START_MODE, {
@@ -17,6 +20,9 @@ var stateHandlers = {
             this.attributes['loop'] = true;
             this.attributes['shuffle'] = false;
             this.attributes['playbackIndexChanged'] = true;
+            // OUR CHANGES
+            instrument = constants.instruments.PIANO
+            octave = 3 
             //  Change state to START_MODE
             this.handler.state = constants.states.START_MODE;
 
