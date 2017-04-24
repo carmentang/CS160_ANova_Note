@@ -7,6 +7,10 @@ var constants = require('./constants');
 var instrument = 0;
 var octave = 0;
 
+// Dialogues
+var whatCanISay = "To listen to a note say something like, play a c note. To listen to a chord say something like, play a c chord. To change instruments say something like, change instrument to piano."
+var changeInstrHelp = "The available instruments are piano, violin, and guitar."
+
 var stateHandlers = {
     startModeIntentHandlers : Alexa.CreateStateHandler(constants.states.START_MODE, {
         /*
@@ -17,7 +21,7 @@ var stateHandlers = {
             this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
             this.attributes['index'] = 0;
             this.attributes['offsetInMilliseconds'] = 0;
-            this.attributes['loop'] = true;
+            this.attributes['loop'] = false;
             this.attributes['shuffle'] = false;
             this.attributes['playbackIndexChanged'] = true;
 
@@ -28,8 +32,12 @@ var stateHandlers = {
             //  Change state to START_MODE
             this.handler.state = constants.states.START_MODE;
 
-            var message = 'Welcome to the AWS Podcast. You can say, play the audio to begin the podcast.';
-            var reprompt = 'You can say, play the audio, to begin.';
+            // TODO Delete
+            // var message = 'Welcome to the AWS Podcast. You can say, play the audio to begin the podcast.';
+            // var reprompt = 'You can say, play the audio, to begin.';
+
+            var message = "Welcome to the music note app."
+            var repromt = whatCanIsay
 
             this.response.speak(message).listen(reprompt);
             this.emit(':responseReady');
@@ -40,7 +48,7 @@ var stateHandlers = {
                 this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
                 this.attributes['index'] = 0;
                 this.attributes['offsetInMilliseconds'] = 0;
-                this.attributes['loop'] = true;
+                this.attributes['loop'] = false;
                 this.attributes['shuffle'] = false;
                 this.attributes['playbackIndexChanged'] = true;
                 //  Change state to START_MODE
@@ -48,8 +56,20 @@ var stateHandlers = {
             }
             controller.play.call(this);
         },
+        'PlayNote' : function () {
+            // TODO Implement me
+        },
+        'PlayChord' : function () {
+            // TODO Implement me
+        },
+        'ChangeInstrument' : function () {
+            // TODO Implement me
+        },
         'AMAZON.HelpIntent' : function () {
-            var message = 'Welcome to the AWS Podcast. You can say, play the audio, to begin the podcast.';
+            // TODO DELETE
+            // var message = 'Welcome to the AWS Podcast. You can say, play the audio, to begin the podcast.';
+
+            var message = whatCanISay
             this.response.speak(message).listen(message);
             this.emit(':responseReady');
         },
@@ -67,7 +87,9 @@ var stateHandlers = {
             // No session ended logic
         },
         'Unhandled' : function () {
-            var message = 'Sorry, I could not understand. Please say, play the audio, to begin the audio.';
+            // TODO DELETE
+            // var message = 'Sorry, I could not understand. Please say, play the audio, to begin the audio.';
+            var message = "Don't sass me." + whatCanISay
             this.response.speak(message).listen(message);
             this.emit(':responseReady');
         }
@@ -218,6 +240,9 @@ var controller = function () {
 
             this.response.audioPlayerPlay(playBehavior, podcast.url, token, null, offsetInMilliseconds);
             this.emit(':responseReady');
+        },
+        playNote: function () {
+            // TODO Implement me
         },
         stop: function () {
             /*
