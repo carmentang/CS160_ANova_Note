@@ -20,9 +20,11 @@ var stateHandlers = {
             this.attributes['loop'] = true;
             this.attributes['shuffle'] = false;
             this.attributes['playbackIndexChanged'] = true;
+
             // OUR CHANGES
             instrument = constants.instruments.PIANO;
             octave = 3;
+
             //  Change state to START_MODE
             this.handler.state = constants.states.START_MODE;
 
@@ -70,6 +72,7 @@ var stateHandlers = {
             this.emit(':responseReady');
         }
     }),
+
     playModeIntentHandlers : Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         /*
          *  All Intent Handlers for state : PLAY_MODE
@@ -137,6 +140,7 @@ var stateHandlers = {
         'NextCommandIssued' : function () { controller.playNext.call(this) },
         'PreviousCommandIssued' : function () { controller.playPrevious.call(this) }
     }),
+
     resumeDecisionModeIntentHandlers : Alexa.CreateStateHandler(constants.states.RESUME_DECISION_MODE, {
         /*
          *  All Intent Handlers for state : RESUME_DECISION_MODE

@@ -4,13 +4,31 @@
       "intent": "PlayAudio"
     },
     {
-      "intent": "PlayChord"
+      "intent": "PlayChord",
+      "slots": [
+        {
+          "name": "Chords",
+          "type": "CHORDS"
+        }
+      ]
     },
     {
-      "intent": "PlayNote"
+      "intent": "PlayNote",
+      "slots": [
+        {
+          "name": "Notes",
+          "type": "NOTES"
+        }
+      ]
     },
     {
-      "intent": "ChangeInstrument"
+      "intent": "ChangeInstrument",
+      "slots": [
+        {
+          "name": "Instruments",
+          "type": "INSTRUMENTS"
+        }
+      ]
     },
     {
       "intent": "AMAZON.PauseIntent"
