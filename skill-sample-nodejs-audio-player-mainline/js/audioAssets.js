@@ -13,34 +13,37 @@ var audioData = [
 ];
 
 var piano = [
-{
-	'title' : 'Note X'
-	'url' : 'note_url.mp3'
-},
-{
-	'title' : 'Chord X'
-	'url' : 'chord_url.mp3'
-}]
+    {
+    	'title' : 'Note X',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Chord X',
+    	'url' : 'chord_url.mp3'
+    }
+];
 
 var violin = [
-{
-	'title' : 'Note X'
-	'url' : 'note_url.mp3'
-},
-{
-	'title' : 'Chord X'
-	'url' : 'chord_url.mp3'
-}]
+    {
+    	'title' : 'Note X',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Chord X',
+    	'url' : 'chord_url.mp3'
+    }
+];
 
 var guitar = [
-{
-	'title' : 'Note X'
-	'url' : 'note_url.mp3'
-},
-{
-	'title' : 'Chord X'
-	'url' : 'chord_url.mp3'
-}]
+    {
+    	'title' : 'Note X',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Chord X',
+    	'url' : 'chord_url.mp3'
+    }
+];
 
 
 module.exports = audioData;
