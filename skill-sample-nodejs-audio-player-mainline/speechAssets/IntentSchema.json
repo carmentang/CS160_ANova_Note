@@ -1,10 +1,10 @@
 {
   "intents": [
     {
-      "intent": "PlayAudio"
+      "intent": "PlayAudioIntent"
     },
     {
-      "intent": "PlayChord",
+      "intent": "PlayChordIntent",
       "slots": [
         {
           "name": "Chords",
@@ -13,16 +13,24 @@
       ]
     },
     {
-      "intent": "PlayNote",
+      "intent": "PlayNoteIntent",
       "slots": [
         {
-          "name": "Notes",
+          "name": "NoteOne",
+          "type": "NOTES"
+        },
+        {
+          "name": "NoteTwo",
+          "type": "NOTES"
+        },
+        {
+          "name": "NoteThree",
           "type": "NOTES"
         }
       ]
     },
     {
-      "intent": "ChangeInstrument",
+      "intent": "ChangeInstrumentIntent",
       "slots": [
         {
           "name": "Instruments",

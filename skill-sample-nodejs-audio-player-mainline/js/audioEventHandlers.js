@@ -1,8 +1,15 @@
 'use strict';
 
 var Alexa = require('alexa-sdk');
-var audioData = require('./audioAssets');
 var constants = require('./constants');
+
+var audioAssets= require('./audioAssets');
+var pianoNotes = audioAssets.pianoNotes;
+var pianoChords = audioAssets.pianoChords;
+var violinNotes = audioAssets.violinNotes;
+var violinChords = audioAssets.violinChords;
+var guitarNotes = audioAssets.guitarNotes;
+var guitarChords = audioAssets.guitarChords;
 
 // Binding audio handlers to PLAY_MODE State since they are expected only in this mode.
 var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
@@ -57,21 +64,42 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         var enqueueIndex = this.attributes['index'];
         enqueueIndex +=1;
         // Checking if  there are any items to be enqueued.
-        if (enqueueIndex === audioData.length) {
-            if (this.attributes['loop']) {
-                // Enqueueing the first item since looping is enabled.
-                enqueueIndex = 0;
-            } else {
-                // Nothing to enqueue since reached end of the list and looping is disabled.
-                return this.context.succeed(true);
-            }
+        if (enqueueIndex === this.attributes['playOrder'].length) {
+            // Nothing to enqueue since reached end of the list and looping is disabled.
+            // TODO What happens after returning? Where does control flow go to?
+            return this.context.succeed(true);
         }
         // Setting attributes to indicate item is enqueued.
         this.attributes['enqueuedToken'] = String(this.attributes['playOrder'][enqueueIndex]);
 
         var enqueueToken = this.attributes['enqueuedToken'];
         var playBehavior = 'ENQUEUE';
-        var podcast = audioData[this.attributes['playOrder'][enqueueIndex]];
+
+        // TODO fixme
+        var instrumentSounds;
+        switch (this.attributes['instrument']) {
+            case constants.instruments.PIANO:
+                if (this.attributes['playingNotes']) {
+                    instrumentSounds = pianoNotes;
+                } else {
+                    instrumentSounds = pianoChords;
+                }
+                break;
+            case constants.instruments.VIOLIN:
+                if (this.attributes['playingNotes']) {
+                    instrumentSounds = violinNotes;
+                } else {
+                    instrumentSounds = violinChords;
+                }
+            case constants.instruments.GUITAR:
+                if (this.attributes['playingNotes']) {
+                    instrumentSounds = guitarNotes;
+                } else {
+                    instrumentSounds = guitarChords;
+                }
+        }
+        
+        var note = instrumentSounds[this.attributes['playOrder'][enqueueIndex]];
         var expectedPreviousToken = this.attributes['token'];
         var offsetInMilliseconds = 0;
         
@@ -79,9 +107,9 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         this.emit(':responseReady');
     },
     'PlaybackFailed' : function () {
-        //  AudioPlayer.PlaybackNearlyFinished Directive received. Logging the error.
-        console.log("Playback Failed : %j", this.event.request.error);
-        this.context.succeed(true);
+     //  AudioPlayer.PlaybackNearlyFinished Directive received. Logging the error.
+     console.log("Playback Failed : %j", this.event.request.error);
+     this.context.succeed(true);
     }
 });
 

@@ -6,7 +6,7 @@ module.exports = Object.freeze({
     appId : '',
     
     //  DynamoDB Table name
-    dynamoDBTableName : 'LongFormAudioSample',
+    dynamoDBTableName : 'ANovaNote',
     
     /*
      *  States:
@@ -19,8 +19,7 @@ module.exports = Object.freeze({
     states : {
         START_MODE : '',
         PLAY_MODE : '_PLAY_MODE',
-        RESUME_DECISION_MODE : '_RESUME_DECISION_MODE',
-        CHANGE_INSTR : "_CHANGE_INSTR"
+        RESUME_DECISION_MODE : '_RESUME_DECISION_MODE'
     },
 
     instruments : {

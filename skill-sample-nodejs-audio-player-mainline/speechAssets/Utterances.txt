@@ -1,20 +1,5 @@
-PlayAudio begin podcast
-PlayAudio begin the podcast
-PlayAudio begin playing the podcast
-PlayAudio start podcast
-PlayAudio start the podcast
-PlayAudio start playing the podcast
-PlayAudio play the podcast
-PlayAudio to play
-PlayAudio to begin podcast
-PlayAudio to begin the podcast
-PlayAudio to begin playing the podcast
-PlayAudio to start podcast
-PlayAudio to start the podcast
-PlayAudio to start playing the podcast
-PlayAudio to play the podcast
-PlayNote play a {Notes} note
-PlayNote play an {Notes} note
-PlayChord play a {Chords} chord
-PlayChord play an {Chords} chord
-ChangeInstrument change the instrument to {Instruments}
+PlayNoteIntent play a {NoteOne} note
+PlayNoteIntent play a {NoteOne} {NoteTwo} note
+PlayNoteIntent play a {NoteOne} {NoteTwo} {NoteThree} note
+PlayChordIntent play a {Chords} chord
+ChangeInstrumentIntent change the instrument to {Instruments}

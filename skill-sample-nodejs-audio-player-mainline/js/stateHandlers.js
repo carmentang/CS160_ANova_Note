@@ -1,20 +1,107 @@
 'use strict';
 
 var Alexa = require('alexa-sdk');
-var audioData = require('./audioAssets');
 var constants = require('./constants');
 
-// OUR CHANGES
+var audioAssets = require('./audioAssets');
+var pianoNotes = audioAssets.pianoNotes;
+var pianoChords = audioAssets.pianoChords;
+var violinNotes = audioAssets.violinNotes;
+var violinChords = audioAssets.violinChords;
+var guitarNotes = audioAssets.guitarNotes;
+var guitarChords = audioAssets.guitarChords;
+
 // To be used as noteName + num, where num is 1, 2, ...
 var noteName = "Note "
 var chordName = "Chord "
 
-var instrument = 0;
+// Instrument to play
+var instrumentNotes = pianoNotes;
+var instrumentChords = pianoChords;
+
+// Notes determined by octave * 7 + noteToNum()
+// TODO When adding more octave later change default octave to 2
 var octave = 0;
+var MAX_OCTAVE = 3;
 
 // Dialogues
-var whatCanISay = "To listen to a note say something like, play a c note. To listen to a chord say something like, play a c chord. To change instruments say something like, change instrument to piano."
-var changeInstrHelp = "The available instruments are piano, violin, and guitar."
+var mainMenuTxt = "Welcome to music note. What note or chord would you like?";
+var whatCanISay = "To listen to a note say something like, play a c note. To listen to a chord say something like, play a c chord. To change instruments say something like, change instrument to piano.";
+var changeInstrHelp = "The available instruments are piano, violin, and guitar.";
+var exitTxt = "Good riddance."
+var unhandledTxt= "Don't sass me. I'm going back to main menu. If you want to know what you can say, say what can I say. Now how hard is that?"
+var notSupportedTxt = "This command is not supported, do not sass me again."
+
+var noteToNum = function (note) {
+    // TODO Include sharp and flat notes later
+    switch (note) {
+        case "c":
+            return 0;
+        case "d":
+            return 1;
+        case "e":
+            return 2;
+        case "f":
+            return 3;
+        case "g":
+            return 4;
+        case "a":
+            return 5;
+        case "b":
+            return 6;
+    }
+};
+
+var noteIndex = function (note) {
+    /*
+    Params:
+        note : string
+    */
+    var noteNum = noteToNum(note);
+    return octave * 7 + noteToNum;
+};
+
+var getNoteIndexes = function (notes) {
+    /*
+    Params:
+        notes : array
+    */
+    var noteIndexes = []
+    for (var i = 0; i < notes.length; i++) {
+        noteIndexes.push(noteIndex(notes[i]));
+    }
+    return noteIndexes;
+    
+};
+
+var changeInstrument  = function (instrument) {
+    // Change instrument variable
+    switch (instrument) {
+        case constants.instruments.PIANO:
+            instrumentNotes = pianoNotes;
+            instrumentChords = pianochords;
+            break;
+        case constants.instruments.VIOLIN:
+            instrumentNotes = violinNotes;
+            instrumentChords = violinChords;
+            break;
+        case constants.instruments.GUITAR:
+            instrumentNotes = guitarNotes;
+            instrumentChords = guitarChords;
+            break;
+    }
+};
+
+var changeOctave = function () {
+    octave += 1;
+    if (octave > MAX_OCTAVE) {
+        octave = MAX_OCTAVE;
+    }
+    if (octave < 0) {
+        octave = 0;
+    }
+};
+
 
 var stateHandlers = {
     startModeIntentHandlers : Alexa.CreateStateHandler(constants.states.START_MODE, {
@@ -23,80 +110,67 @@ var stateHandlers = {
          */
         'LaunchRequest' : function () {
             // Initialize Attributes
-            this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
-            this.attributes['index'] = 0;
+            this.attributes['playOrder'] = []
+            this.attributes['index'] = -1;
             this.attributes['offsetInMilliseconds'] = 0;
-            this.attributes['loop'] = false;
-            this.attributes['shuffle'] = false;
             this.attributes['playbackIndexChanged'] = true;
-
-            // OUR CHANGES
-            instrument = constants.instruments.PIANO;
-            octave = 2;
+            this.attributes['instrument'] = constants.instruments.PIANO;
+            this.attributes['playingNotes'] = false;
+            this.attributes['playingChords'] = false;
 
             //  Change state to START_MODE
             this.handler.state = constants.states.START_MODE;
-
-            // TODO Delete
-            // var message = 'Welcome to the AWS Podcast. You can say, play the audio to begin the podcast.';
-            // var reprompt = 'You can say, play the audio, to begin.';
-
-            var message = "Welcome to the music note app."
-            var repromt = whatCanIsay
-
-            this.response.speak(message).listen(reprompt);
-            this.emit(':responseReady');
+            this.response.speak(mainMenuTxt).listen(whatCanISay);
         },
-        'PlayAudio' : function () {
-            if (!this.attributes['playOrder']) {
-                // Initialize Attributes if undefined.
-                this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
-                this.attributes['index'] = 0;
-                this.attributes['offsetInMilliseconds'] = 0;
-                this.attributes['loop'] = false;
-                this.attributes['shuffle'] = false;
-                this.attributes['playbackIndexChanged'] = true;
-                //  Change state to START_MODE
-                this.handler.state = constants.states.START_MODE;
+        "Start" : function() {
+            this.attributes['playOrder'] = null
+            this.attributes['index'] = -1;
+            this.attributes['offsetInMilliseconds'] = 0;
+            this.attributes['playbackIndexChanged'] = true;
+            this.attributes['playingNotes'] = false;
+            this.attributes['playingChords'] = false;
+            this.response.speak(mainMenuTxt).listen(whatCanISay);
+        },
+        'PlayNoteIntent' : function () {
+            // TODO Test me
+            var notes = [];
+            if (typeof this.event.request.intent.slots.NoteOne.value != "undefined") {
+                notes.push(this.event.request.intent.slots.NoteOne.value);
             }
-            controller.play.call(this);
+            if (typeof this.event.request.intent.slots.NoteTwo.value != "undefined") {
+                notes.push(this.event.request.intent.slots.NoteTwo.value);
+            }
+            if (typeof this.event.request.intent.slots.NoteThree.value != "undefined") {
+                notes.push(this.event.request.intent.slots.NoteThree.value);
+            }
+            var notesToPlay = getNoteIndexes(notes);
+            this.attributes['playOrder'] = notesToPlay;
+            this.attributes['index'] = 0;
+            this.attributes['playbackIndexChanged'] = true;
+            this.attributes['playingNotes'] = true;
+            this.attributes['playingChords'] = false;
+            controller.playNotes.call(this, notes);
         },
-        'PlayNote' : function () {
+        'PlayChordIntent' : function () {
             // TODO Implement me
         },
-        'PlayChord' : function () {
-            // TODO Implement me
-        },
-        'ChangeInstrument' : function () {
+        'ChangeInstrumentIntent' : function () {
             // TODO Implement me
         },
         'AMAZON.HelpIntent' : function () {
-            // TODO DELETE
-            // var message = 'Welcome to the AWS Podcast. You can say, play the audio, to begin the podcast.';
-
-            var message = whatCanISay
-            this.response.speak(message).listen(message);
-            this.emit(':responseReady');
+            this.emit(":tell", whatCanISay);
         },
         'AMAZON.StopIntent' : function () {
-            var message = 'Good bye.';
-            this.response.speak(message);
-            this.emit(':responseReady');
+            this.emit(":tell", exitTxt);
         },
         'AMAZON.CancelIntent' : function () {
-            var message = 'Good bye.';
-            this.response.speak(message);
-            this.emit(':responseReady');
+            this.emit(":tell", exitTxt);
         },
         'SessionEndedRequest' : function () {
             // No session ended logic
         },
         'Unhandled' : function () {
-            // TODO DELETE
-            // var message = 'Sorry, I could not understand. Please say, play the audio, to begin the audio.';
-            var message = "Don't sass me." + whatCanISay
-            this.response.speak(message).listen(message);
-            this.emit(':responseReady');
+            this.emit(":tell", unhandledTxt);
         }
     }),
 
@@ -110,27 +184,25 @@ var stateHandlers = {
              *  If playback had finished during last session :
              *      Give welcome message.
              *      Change state to START_STATE to restrict user inputs.
-             *  Else :
-             *      Ask user if he/she wants to resume from last position.
-             *      Change state to RESUME_DECISION_MODE
              */
-            var message;
-            var reprompt;
+            var message = "I got interrupted, going back to main menu." + mainMenuTxt;
+            var reprompt = whatCanISay;
             if (this.attributes['playbackFinished']) {
-                this.handler.state = constants.states.START_MODE;
-                message = 'Welcome to the AWS Podcast. You can say, play the audio to begin the podcast.';
-                reprompt = 'You can say, play the audio, to begin.';
-            } else {
-                this.handler.state = constants.states.RESUME_DECISION_MODE;
-                message = 'You were listening to ' + audioData[this.attributes['playOrder'][this.attributes['index']]].title +
-                    ' Would you like to resume?';
-                reprompt = 'You can say yes to resume or no to play from the top.';
+                message = mainMenuTxt;
             }
 
-            this.response.speak(message).listen(reprompt);
-            this.emit(':responseReady');
+            this.handler.state = constants.states.START_MODE;
+            // this.response.speak(message).listen(reprompt);
+            // this.emit(':responseReady');
+            this.attributes['playbackFinished'] = false;
+            this.emitWithState("Start");
         },
-        'PlayAudio' : function () { controller.play.call(this) },
+        // Controller will handle playing logic, this is just here to go 
+        // through the play queue.
+        'PlayNoteIntent' : function () { controller.playNotes.call(this, note) },
+        // TODO We don't need these funcitonally, but the audio stream
+        // directives require these intents be implemented. Just go back to
+        // main menu for them with warning saying this feature not available.
         'AMAZON.NextIntent' : function () { controller.playNext.call(this) },
         'AMAZON.PreviousIntent' : function () { controller.playPrevious.call(this) },
         'AMAZON.PauseIntent' : function () { controller.stop.call(this) },
@@ -143,69 +215,27 @@ var stateHandlers = {
         'AMAZON.ShuffleOffIntent' : function () { controller.shuffleOff.call(this) },
         'AMAZON.StartOverIntent' : function () { controller.startOver.call(this) },
         'AMAZON.HelpIntent' : function () {
+
             // This will called while audio is playing and a user says "ask <invocation_name> for help"
-            var message = 'You are listening to the AWS Podcast. You can say, Next or Previous to navigate through the playlist. ' +
-                'At any time, you can say Pause to pause the audio and Resume to resume.';
-            this.response.speak(message).listen(message);
-            this.emit(':responseReady');
+            this.emit(":ask", whatCanISay);
         },
         'SessionEndedRequest' : function () {
             // No session ended logic
         },
         'Unhandled' : function () {
-            var message = 'Sorry, I could not understand. You can say, Next or Previous to navigate through the playlist.';
-            this.response.speak(message).listen(message);
-            this.emit(':responseReady');
+            this.emit(":tell", unhandledTxt);
         }
     }),
     remoteControllerHandlers : Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         /*
          *  All Requests are received using a Remote Control. Calling corresponding handlers for each of them.
          */
+         // TODO fixme, might consider variable to tell if currently playing
+         // notes or chords.
         'PlayCommandIssued' : function () { controller.play.call(this) },
         'PauseCommandIssued' : function () { controller.stop.call(this) },
         'NextCommandIssued' : function () { controller.playNext.call(this) },
         'PreviousCommandIssued' : function () { controller.playPrevious.call(this) }
-    }),
-
-    resumeDecisionModeIntentHandlers : Alexa.CreateStateHandler(constants.states.RESUME_DECISION_MODE, {
-        /*
-         *  All Intent Handlers for state : RESUME_DECISION_MODE
-         */
-        'LaunchRequest' : function () {
-            var message = 'You were listening to ' + audioData[this.attributes['playOrder'][this.attributes['index']]].title +
-                ' Would you like to resume?';
-            var reprompt = 'You can say yes to resume or no to play from the top.';
-            this.response.speak(message).listen(reprompt);
-            this.emit(':responseReady');
-        },
-        'AMAZON.YesIntent' : function () { controller.play.call(this) },
-        'AMAZON.NoIntent' : function () { controller.reset.call(this) },
-        'AMAZON.HelpIntent' : function () {
-            var message = 'You were listening to ' + audioData[this.attributes['index']].title +
-                ' Would you like to resume?';
-            var reprompt = 'You can say yes to resume or no to play from the top.';
-            this.response.speak(message).listen(reprompt);
-            this.emit(':responseReady');
-        },
-        'AMAZON.StopIntent' : function () {
-            var message = 'Good bye.';
-            this.response.speak(message);
-            this.emit(':responseReady');
-        },
-        'AMAZON.CancelIntent' : function () {
-            var message = 'Good bye.';
-            this.response.speak(message);
-            this.emit(':responseReady');
-        },
-        'SessionEndedRequest' : function () {
-            // No session ended logic
-        },
-        'Unhandled' : function () {
-            var message = 'Sorry, this is not a valid command. Please say help to hear what you can say.';
-            this.response.speak(message).listen(message);
-            this.emit(':responseReady');
-        }
     })
 };
 
@@ -213,40 +243,44 @@ module.exports = stateHandlers;
 
 var controller = function () {
     return {
-        play: function () {
-            /*
-             *  Using the function to begin playing audio when:
-             *      Play Audio intent invoked.
-             *      Resuming audio when stopped/paused.
-             *      Next/Previous commands issued.
-             */
+        playNotes: function () {
+            // TODO Test me
             this.handler.state = constants.states.PLAY_MODE;
 
+            // Done playing notes, going back to main menu.
             if (this.attributes['playbackFinished']) {
-                // Reset to top of the playlist when reached end.
-                this.attributes['index'] = 0;
-                this.attributes['offsetInMilliseconds'] = 0;
-                this.attributes['playbackIndexChanged'] = true;
                 this.attributes['playbackFinished'] = false;
+                this.handler.state = constants.states.START_MODE;
+                this.emitWithState("LaunchRequest");
             }
 
             var token = String(this.attributes['playOrder'][this.attributes['index']]);
-            var playBehavior = 'REPLACE_ALL';
-            var podcast = audioData[this.attributes['playOrder'][this.attributes['index']]];
+            var playBehavior = "REPLACE_ALL";
+            var noteNum = noteIndex(note);
+            var note = instrumentNotes[this.attributes['playOrder'][this.attributes['index']]];
             var offsetInMilliseconds = this.attributes['offsetInMilliseconds'];
             // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
             this.attributes['enqueuedToken'] = null;
 
+            // DEBUG
+            console.log("Attributes:");
+            console.log(this.attributes);
+            console.log("pianoNotes:");
+            console.log(pianoNotes);
+            console.log("instrumentNotes");
+            console.log(instrumentNotes);
+
             if (canThrowCard.call(this)) {
-                var cardTitle = 'Playing ' + podcast.title;
-                var cardContent = 'Playing ' + podcast.title;
+                var cardTitle = 'Playing ' + note.title;
+                var cardContent = 'Playing ' + note.title;
                 this.response.cardRenderer(cardTitle, cardContent, null);
             }
 
-            this.response.audioPlayerPlay(playBehavior, podcast.url, token, null, offsetInMilliseconds);
-            this.emit(':responseReady');
+            this.response.audioPlayerPlay(playBehavior, note.url, token, null, offsetInMilliseconds);
+            // Send prev. alexa response & persist state.
+            this.emit(":responseReady");
         },
-        playNote: function () {
+        playChord: function (){
             // TODO Implement me
         },
         stop: function () {
@@ -259,31 +293,10 @@ var controller = function () {
         },
         playNext: function () {
             /*
-             *  Called when AMAZON.NextIntent or PlaybackController.NextCommandIssued is invoked.
-             *  Index is computed using token stored when AudioPlayer.PlaybackStopped command is received.
-             *  If reached at the end of the playlist, choose behavior based on "loop" flag.
-             */
-            var index = this.attributes['index'];
-            index += 1;
-            // Check for last audio file.
-            if (index === audioData.length) {
-                if (this.attributes['loop']) {
-                    index = 0;
-                } else {
-                    // Reached at the end. Thus reset state to start mode and stop playing.
-                    this.handler.state = constants.states.START_MODE;
-
-                    var message = 'You have reached at the end of the playlist.';
-                    this.response.speak(message).audioPlayerStop();
-                    return this.emit(':responseReady');
-                }
-            }
-            // Set values to attributes.
-            this.attributes['index'] = index;
-            this.attributes['offsetInMilliseconds'] = 0;
-            this.attributes['playbackIndexChanged'] = true;
-
-            controller.play.call(this);
+            Do nothing
+            */
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", mainMenuTxt);
         },
         playPrevious: function () {
             /*
