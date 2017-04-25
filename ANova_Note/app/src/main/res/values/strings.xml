@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ANova_Note</string>
+    <string name="app_name">ANova Note</string>
+    <string name="listening_status">Listening...</string>
+    <string name="playing_status">Playing...</string>
 </resources>
