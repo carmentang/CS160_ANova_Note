@@ -123,7 +123,10 @@ var stateHandlers = {
             this.response.speak(mainMenuTxt).listen(whatCanISay);
         },
         "Start" : function() {
-            this.attributes['playOrder'] = null
+            // DEBUG
+            console.log("START_MODE: START");
+
+            this.attributes['playOrder'] = []
             this.attributes['index'] = -1;
             this.attributes['offsetInMilliseconds'] = 0;
             this.attributes['playbackIndexChanged'] = true;
@@ -146,27 +149,74 @@ var stateHandlers = {
             // var notesToPlay = getNoteIndexes(notes);
             var notesToPlay = [];
             for (var i = 0; i < notes.length; i++) {
+                
+                // DEBUG
+                console.log("NOTE HEARD:");
+                console.log(notes[i]);
+
                 var noteNum = -1;
                 switch (notes[i]) {
                     case "c":
                         noteNum = 0;
                         break;
+                    case "c.":
+                        noteNum = 0;
+                        break;
+                    case "C":
+                        noteNum = 0;
+                        break;
                     case "d":
+                        noteNum = 1;
+                        break;
+                    case "D":
+                        noteNum = 1;
+                        break;
+                    case "d.":
                         noteNum = 1;
                         break;
                     case "e":
                         noteNum = 2;
                         break;
+                    case "E":
+                        noteNum = 2;
+                        break;
+                    case "e.":
+                        noteNum = 2;
+                        break;
                     case "f":
+                        noteNum = 3;
+                        break;
+                    case "F":
+                        noteNum = 3;
+                        break;
+                    case "f.":
                         noteNum = 3;
                         break;
                     case "g":
                         noteNum = 4;
                         break;
+                    case "G":
+                        noteNum = 4;
+                        break;
+                    case "g.":
+                        noteNum = 4;
+                        break;
                     case "a":
                         noteNum = 5;
                         break;
+                    case "A":
+                        noteNum = 5;
+                        break;
+                    case "a.":
+                        noteNum = 5;
+                        break;
                     case "b":
+                        noteNum = 6;
+                        break;
+                    case "B":
+                        noteNum = 6;
+                        break;
+                    case "b.":
                         noteNum = 6;
                         break;
                 }
@@ -218,6 +268,9 @@ var stateHandlers = {
              *      Give welcome message.
              *      Change state to START_STATE to restrict user inputs.
              */
+             // DEBUG
+             console.log("PLAY MODE LAUNCH REQUEST");
+
             var message = "I got interrupted, going back to main menu." + mainMenuTxt;
             var reprompt = whatCanISay;
             if (this.attributes['playbackFinished']) {
@@ -232,7 +285,18 @@ var stateHandlers = {
         },
         // Controller will handle playing logic, this is just here to go 
         // through the play queue.
-        'PlayNoteIntent' : function () { controller.playNotes.call(this) },
+        'PlayNoteIntent' : function () {
+            // DEBUG
+            console.log("PLAY_MODE: PlayNoteIntent");
+
+            // if (this.attributes['index'] == -1) {
+            //     this.handler.state = START_MODE;
+            //     this.emitWithState("Start");
+            // }
+            // controller.playNotes.call(this);
+            this.handler.state = constants.states.START_MODE;
+            this.emitWithState("PlayNoteIntent");
+        },
         // TODO We don't need these funcitonally, but the audio stream
         // directives require these intents be implemented. Just go back to
         // main menu for them with warning saying this feature not available.
@@ -284,16 +348,19 @@ var controller = function () {
             if (this.attributes['playbackFinished']) {
                 this.attributes['playbackFinished'] = false;
                 this.handler.state = constants.states.START_MODE;
-                this.emitWithState("LaunchRequest");
+                this.emitWithState("Start");
             }
 
             var token = String(this.attributes['playOrder'][this.attributes['index']]);
             var playBehavior = "REPLACE_ALL";
-            var noteNum = noteIndex(note);
             var note = instrumentNotes[this.attributes['playOrder'][this.attributes['index']]];
             var offsetInMilliseconds = this.attributes['offsetInMilliseconds'];
             // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
             this.attributes['enqueuedToken'] = null;
+
+            // DEBUG
+            console.log("attributes:");
+            console.log(this.attributes);
 
             if (canThrowCard.call(this)) {
                 var cardTitle = 'Playing ' + note.title;

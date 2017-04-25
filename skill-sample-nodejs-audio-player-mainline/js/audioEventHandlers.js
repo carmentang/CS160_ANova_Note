@@ -19,12 +19,12 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
          * Confirming that requested audio file began playing.
          * Storing details in dynamoDB using attributes.
          */
+        // DEBUG
+        console.log("PLAYBACK STARTED");
+
         this.attributes['token'] = getToken.call(this);
         this.attributes['index'] = getIndex.call(this);
         this.attributes['playbackFinished'] = false;
-
-        // DEBUG
-        console.log("PLAYBACK STARTED");
 
         this.emit(':saveState', true);
     },
@@ -34,11 +34,14 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
          * Confirming that audio file completed playing.
          * Storing details in dynamoDB using attributes.
          */
-        this.attributes['playbackFinished'] = true;
-        this.attributes['enqueuedToken'] = false;
-
         // DEBUG
         console.log("PLAYBACK FINISHED");
+
+        this.attributes['playbackFinished'] = true;
+        this.attributes['enqueuedToken'] = false;
+ 
+        // DEBUG
+        // this.handler.state = constants.states.START_MODE;
 
         this.emit(':saveState', true);
     },
@@ -48,11 +51,12 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
          * Confirming that audio file stopped playing.
          * Storing details in dynamoDB using attributes.
          */
+        // DEBUG
+        console.log("PLAYBACK STOPPED");
+
         this.attributes['token'] = getToken.call(this);
         this.attributes['index'] = getIndex.call(this);
         this.attributes['offsetInMilliseconds'] = getOffsetInMilliseconds.call(this);
-
-        console.log("PLAYBACK STOPPED");
 
         this.emit(':saveState', true);
     },
@@ -90,7 +94,6 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         var enqueueToken = this.attributes['enqueuedToken'];
         var playBehavior = 'ENQUEUE';
 
-        // TODO fixme
         var instrumentSounds;
         switch (this.attributes['instrument']) {
             case constants.instruments.PIANO:
