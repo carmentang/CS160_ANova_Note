@@ -102,6 +102,16 @@ var changeOctave = function () {
     }
 };
 
+var newSessionHandlers = {
+    "LaunchRequest" : function () {
+        this.handler.state = constants.states.START_MODE;
+        this.emitWithState("Start");
+    },
+    "Unhandled" : function () {
+        this.handler.state = constants.states.START_MODE;
+        this.emit(":tell", "I love siri.");
+    }
+};
 
 var stateHandlers = {
     startModeIntentHandlers : Alexa.CreateStateHandler(constants.states.START_MODE, {
@@ -109,6 +119,9 @@ var stateHandlers = {
          *  All Intent Handlers for state : START_MODE
          */
         'LaunchRequest' : function () {
+            // DEBUG
+            console.log("START_MODE: LaunchRequest");
+
             // Initialize Attributes
             this.attributes['playOrder'] = []
             this.attributes['index'] = -1;
@@ -120,7 +133,8 @@ var stateHandlers = {
 
             //  Change state to START_MODE
             this.handler.state = constants.states.START_MODE;
-            this.response.speak(mainMenuTxt).listen(whatCanISay);
+            // this.response.speak(mainMenuTxt).listen(whatCanISay);
+            this.emit(":ask", mainMenuTxt);
         },
         "Start" : function() {
             // DEBUG
@@ -132,7 +146,8 @@ var stateHandlers = {
             this.attributes['playbackIndexChanged'] = true;
             this.attributes['playingNotes'] = false;
             this.attributes['playingChords'] = false;
-            this.response.speak(mainMenuTxt).listen(whatCanISay);
+            // this.response.speak(mainMenuTxt).listen(whatCanISay);
+            this.emit(":ask", mainMenuTxt);
         },
         'PlayNoteIntent' : function () {
             // TODO Test me
@@ -269,7 +284,7 @@ var stateHandlers = {
              *      Change state to START_STATE to restrict user inputs.
              */
              // DEBUG
-             console.log("PLAY MODE LAUNCH REQUEST");
+             console.log("PLAY_MODE LaunchRequest");
 
             var message = "I got interrupted, going back to main menu." + mainMenuTxt;
             var reprompt = whatCanISay;
@@ -286,16 +301,14 @@ var stateHandlers = {
         // Controller will handle playing logic, this is just here to go 
         // through the play queue.
         'PlayNoteIntent' : function () {
-            // DEBUG
+            // TODO fixme?
             console.log("PLAY_MODE: PlayNoteIntent");
 
-            // if (this.attributes['index'] == -1) {
-            //     this.handler.state = START_MODE;
-            //     this.emitWithState("Start");
-            // }
-            // controller.playNotes.call(this);
-            this.handler.state = constants.states.START_MODE;
-            this.emitWithState("PlayNoteIntent");
+            if (this.attributes['index'] == -1) {
+                this.handler.state = START_MODE;
+                this.emitWithState("Start");
+            }
+            controller.playNotes.call(this);
         },
         // TODO We don't need these funcitonally, but the audio stream
         // directives require these intents be implemented. Just go back to
@@ -342,13 +355,17 @@ var controller = function () {
     return {
         playNotes: function () {
             // TODO Test me
+            // DEBUG
+            console.log("CONTROLLER: playNotes");
+
             this.handler.state = constants.states.PLAY_MODE;
 
             // Done playing notes, going back to main menu.
             if (this.attributes['playbackFinished']) {
                 this.attributes['playbackFinished'] = false;
                 this.handler.state = constants.states.START_MODE;
-                this.emitWithState("Start");
+                // this.emitWithState("Start");
+                this.emit(":tell", mainMenuTxt);
             }
 
             var token = String(this.attributes['playOrder'][this.attributes['index']]);
@@ -373,102 +390,57 @@ var controller = function () {
             console.log(note.url);
 
             this.response.audioPlayerPlay(playBehavior, note.url, token, null, offsetInMilliseconds);
-            // Send prev. alexa response & persist state.
+            // TODO Ask response from user after playing all audios so
+            // session doesn't just end after asking for one note.
             this.emit(":responseReady");
         },
         playChord: function (){
             // TODO Implement me
         },
         stop: function () {
-            /*
-             *  Issuing AudioPlayer.Stop directive to stop the audio.
-             *  Attributes already stored when AudioPlayer.Stopped request received.
-             */
-            this.response.audioPlayerStop();
-            this.emit(':responseReady');
+            // Do nothing.
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         },
         playNext: function () {
-            /*
-            Do nothing
-            */
+            // Do nothing.
             this.handler.state = constants.states.START_MODE;
-            this.emit(":ask", mainMenuTxt);
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         },
         playPrevious: function () {
-            /*
-             *  Called when AMAZON.PreviousIntent or PlaybackController.PreviousCommandIssued is invoked.
-             *  Index is computed using token stored when AudioPlayer.PlaybackStopped command is received.
-             *  If reached at the end of the playlist, choose behavior based on "loop" flag.
-             */
-            var index = this.attributes['index'];
-            index -= 1;
-            // Check for last audio file.
-            if (index === -1) {
-                if (this.attributes['loop']) {
-                    index = audioData.length - 1;
-                } else {
-                    // Reached at the end. Thus reset state to start mode and stop playing.
-                    this.handler.state = constants.states.START_MODE;
-
-                    var message = 'You have reached at the start of the playlist.';
-                    this.response.speak(message).audioPlayerStop();
-                    return this.emit(':responseReady');
-                }
-            }
-            // Set values to attributes.
-            this.attributes['index'] = index;
-            this.attributes['offsetInMilliseconds'] = 0;
-            this.attributes['playbackIndexChanged'] = true;
-
-            controller.play.call(this);
+            // Do nothing.
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         },
         loopOn: function () {
-            // Turn on loop play.
-            this.attributes['loop'] = true;
-            var message = 'Loop turned on.';
-            this.response.speak(message);
-            this.emit(':responseReady');
+            // Do nothing.
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         },
         loopOff: function () {
-            // Turn off looping
-            this.attributes['loop'] = false;
-            var message = 'Loop turned off.';
-            this.response.speak(message);
-            this.emit(':responseReady');
+            // Do nothing.
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         },
         shuffleOn: function () {
-            // Turn on shuffle play.
-            this.attributes['shuffle'] = true;
-            shuffleOrder((newOrder) => {
-                // Play order have been shuffled. Re-initializing indices and playing first song in shuffled order.
-                this.attributes['playOrder'] = newOrder;
-                this.attributes['index'] = 0;
-                this.attributes['offsetInMilliseconds'] = 0;
-                this.attributes['playbackIndexChanged'] = true;
-                controller.play.call(this);
-            });
+            // Do nothing.
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         },
         shuffleOff: function () {
-            // Turn off shuffle play. 
-            if (this.attributes['shuffle']) {
-                this.attributes['shuffle'] = false;
-                // Although changing index, no change in audio file being played as the change is to account for reordering playOrder
-                this.attributes['index'] = this.attributes['playOrder'][this.attributes['index']];
-                this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
-            }
-            controller.play.call(this);
+            // Do nothing. 
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         },
         startOver: function () {
-            // Start over the current audio file.
-            this.attributes['offsetInMilliseconds'] = 0;
-            controller.play.call(this);
+            // Do nothing.
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         },
         reset: function () {
-            // Reset to top of the playlist.
-            this.attributes['index'] = 0;
-            this.attributes['offsetInMilliseconds'] = 0;
-            this.attributes['playbackIndexChanged'] = true;
-            controller.play.call(this);
+            // Do nothing.
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", "Don't sass me. " + mainMenuTxt);
         }
     }
 }();
@@ -487,18 +459,3 @@ function canThrowCard() {
     }
 }
 
-function shuffleOrder(callback) {
-    // Algorithm : Fisher-Yates shuffle
-    var array = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
-    var currentIndex = array.length;
-    var temp, randomIndex;
-
-    while (currentIndex >= 1) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temp = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temp;
-    }
-    callback(array);
-}

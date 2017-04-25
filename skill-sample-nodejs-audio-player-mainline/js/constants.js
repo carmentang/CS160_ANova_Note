@@ -6,7 +6,7 @@ module.exports = Object.freeze({
     appId : 'amzn1.ask.skill.e98e4cde-9816-4d23-ba6c-17e7512b37f5',
     
     //  DynamoDB Table name
-    dynamoDBTableName : 'ANovaNote',
+    dynamoDBTableName : '',
     
     /*
      *  States:
