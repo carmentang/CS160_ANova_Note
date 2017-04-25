@@ -143,7 +143,40 @@ var stateHandlers = {
             if (typeof this.event.request.intent.slots.NoteThree.value != "undefined") {
                 notes.push(this.event.request.intent.slots.NoteThree.value);
             }
-            var notesToPlay = getNoteIndexes(notes);
+            // var notesToPlay = getNoteIndexes(notes);
+            var notesToPlay = [];
+            for (var i = 0; i < notes.length; i++) {
+                var noteNum = -1;
+                switch (notes[i]) {
+                    case "c":
+                        noteNum = 0;
+                        break;
+                    case "d":
+                        noteNum = 1;
+                        break;
+                    case "e":
+                        noteNum = 2;
+                        break;
+                    case "f":
+                        noteNum = 3;
+                        break;
+                    case "g":
+                        noteNum = 4;
+                        break;
+                    case "a":
+                        noteNum = 5;
+                        break;
+                    case "b":
+                        noteNum = 6;
+                        break;
+                }
+                if (noteNum < 0) {
+                    noteNum = 0;
+                }
+                noteNum = octave * 7 + noteNum;
+                notesToPlay.push(noteNum);
+            }
+
             this.attributes['playOrder'] = notesToPlay;
             this.attributes['index'] = 0;
             this.attributes['playbackIndexChanged'] = true;
@@ -199,7 +232,7 @@ var stateHandlers = {
         },
         // Controller will handle playing logic, this is just here to go 
         // through the play queue.
-        'PlayNoteIntent' : function () { controller.playNotes.call(this, note) },
+        'PlayNoteIntent' : function () { controller.playNotes.call(this) },
         // TODO We don't need these funcitonally, but the audio stream
         // directives require these intents be implemented. Just go back to
         // main menu for them with warning saying this feature not available.
@@ -262,19 +295,15 @@ var controller = function () {
             // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
             this.attributes['enqueuedToken'] = null;
 
-            // DEBUG
-            console.log("Attributes:");
-            console.log(this.attributes);
-            console.log("pianoNotes:");
-            console.log(pianoNotes);
-            console.log("instrumentNotes");
-            console.log(instrumentNotes);
-
             if (canThrowCard.call(this)) {
                 var cardTitle = 'Playing ' + note.title;
                 var cardContent = 'Playing ' + note.title;
                 this.response.cardRenderer(cardTitle, cardContent, null);
             }
+
+            // DEBUG
+            console.log("URL PLAYED");
+            console.log(note.url);
 
             this.response.audioPlayerPlay(playBehavior, note.url, token, null, offsetInMilliseconds);
             // Send prev. alexa response & persist state.

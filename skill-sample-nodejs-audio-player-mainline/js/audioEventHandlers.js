@@ -22,6 +22,10 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         this.attributes['token'] = getToken.call(this);
         this.attributes['index'] = getIndex.call(this);
         this.attributes['playbackFinished'] = false;
+
+        // DEBUG
+        console.log("PLAYBACK STARTED");
+
         this.emit(':saveState', true);
     },
     'PlaybackFinished' : function () {
@@ -32,6 +36,10 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
          */
         this.attributes['playbackFinished'] = true;
         this.attributes['enqueuedToken'] = false;
+
+        // DEBUG
+        console.log("PLAYBACK FINISHED");
+
         this.emit(':saveState', true);
     },
     'PlaybackStopped' : function () {
@@ -43,6 +51,9 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         this.attributes['token'] = getToken.call(this);
         this.attributes['index'] = getIndex.call(this);
         this.attributes['offsetInMilliseconds'] = getOffsetInMilliseconds.call(this);
+
+        console.log("PLAYBACK STOPPED");
+
         this.emit(':saveState', true);
     },
     'PlaybackNearlyFinished' : function () {
@@ -52,6 +63,10 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
          * Storing details in dynamoDB using attributes.
          * Enqueuing the next audio file.
          */
+
+        // DEBUG
+        console.log("PLAYBACK NEARLY FINISHED");
+
         if (this.attributes['enqueuedToken']) {
             /*
              * Since AudioPlayer.PlaybackNearlyFinished Directive are prone to be delivered multiple times during the
