@@ -9,6 +9,14 @@
         {
           "name": "Chords",
           "type": "CHORDS"
+        },
+        {
+          "name": "TypeOne",
+          "type": "CHORD_TYPE"
+        },
+        {
+          "name": "TypeTwo",
+          "type": "CHORD_TYPE"
         }
       ]
     },

@@ -25,11 +25,11 @@ var octave = 0;
 var MAX_OCTAVE = 3;
 
 // Dialogues
-var mainMenuTxt = "Welcome to music note. What note or chord would you like?";
+var mainMenuTxt = "Welcome to nova note. What note or chord would you like to hear?";
 var whatCanISay = "To listen to a note say something like, play a c note. To listen to a chord say something like, play a c chord. To change instruments say something like, change instrument to piano.";
 var changeInstrHelp = "The available instruments are piano, violin, and guitar.";
 var exitTxt = "Good riddance."
-var unhandledTxt= "Don't sass me. I'm going back to main menu. If you want to know what you can say, say what can I say. Now how hard is that?"
+var unhandledTxt= "Don't sass me. I'm going back to main menu. If you want to know what you can say, say help me. Now how hard is that?"
 var notSupportedTxt = "This command is not supported, do not sass me again."
 
 var noteToNum = function (note) {
@@ -73,6 +73,7 @@ var getNoteIndexes = function (notes) {
     return noteIndexes;
     
 };
+
 
 var changeInstrument  = function (instrument) {
     // Change instrument variable
@@ -150,7 +151,7 @@ var stateHandlers = {
             this.emit(":ask", mainMenuTxt);
         },
         'PlayNoteIntent' : function () {
-            // TODO Test me
+            // TODO Implement multiple notes
             var notes = [];
             if (typeof this.event.request.intent.slots.NoteOne.value != "undefined") {
                 notes.push(this.event.request.intent.slots.NoteOne.value);
@@ -170,71 +171,32 @@ var stateHandlers = {
                 console.log(notes[i]);
 
                 var noteNum = -1;
-                switch (notes[i]) {
-                    case "c":
-                        noteNum = 0;
-                        break;
-                    case "c.":
-                        noteNum = 0;
-                        break;
-                    case "C":
-                        noteNum = 0;
-                        break;
-                    case "d":
-                        noteNum = 1;
-                        break;
-                    case "D":
-                        noteNum = 1;
-                        break;
-                    case "d.":
-                        noteNum = 1;
-                        break;
-                    case "e":
-                        noteNum = 2;
-                        break;
-                    case "E":
-                        noteNum = 2;
-                        break;
-                    case "e.":
-                        noteNum = 2;
-                        break;
-                    case "f":
-                        noteNum = 3;
-                        break;
-                    case "F":
-                        noteNum = 3;
-                        break;
-                    case "f.":
-                        noteNum = 3;
-                        break;
-                    case "g":
-                        noteNum = 4;
-                        break;
-                    case "G":
-                        noteNum = 4;
-                        break;
-                    case "g.":
-                        noteNum = 4;
-                        break;
-                    case "a":
-                        noteNum = 5;
-                        break;
-                    case "A":
-                        noteNum = 5;
-                        break;
-                    case "a.":
-                        noteNum = 5;
-                        break;
-                    case "b":
-                        noteNum = 6;
-                        break;
-                    case "B":
-                        noteNum = 6;
-                        break;
-                    case "b.":
-                        noteNum = 6;
-                        break;
+                var letter = notes[i];
+                if (letter == "c" || letter == "c." || letter == "C" || letter == "C."){
+                    noteNum = 0;
                 }
+                else if (letter == "d" || letter == "d." || letter == "D" || letter == "D.") {
+                    noteNum = 1;
+                }
+                else if (letter == "e" || letter == "e." || letter == "E" || letter == "E.") {
+                    noteNum = 2;
+                }
+                else if (letter == "f" || letter == "f." || letter == "F" || letter == "F.") {
+                    noteNum = 3;
+                }
+                else if (letter == "g" || letter == "g." || letter == "G" || letter == "G.") {
+                    noteNum = 4;
+                }
+                else if (letter == "a" || letter == "a." || letter == "A" || letter == "A.") {
+                    noteNum = 5;
+                }
+                else if (letter == "b" || letter == "b." || letter == "B" || letter == "B.") {
+                    noteNum = 6;
+                }
+                else {
+                    noteNum = 0;
+                }
+
                 if (noteNum < 0) {
                     noteNum = 0;
                 }
@@ -247,16 +209,103 @@ var stateHandlers = {
             this.attributes['playbackIndexChanged'] = true;
             this.attributes['playingNotes'] = true;
             this.attributes['playingChords'] = false;
-            controller.playNotes.call(this, notes);
+            controller.playNotes.call(this);
         },
         'PlayChordIntent' : function () {
-            // TODO Implement me
+            // TODO Implement multiple chords to be played, only one is allowed atm.
+            var chordsToPlay = [];
+            var chordName = ""
+            if (typeof this.event.request.intent.slots.Chords.value != "undefined") {
+                var letter = this.event.request.intent.slots.Chords.value;
+                if (letter == "c" || letter == "c." || letter == "C" || letter == "C."){
+                    chordName += "C";
+                }
+                else if (letter == "d" || letter == "d." || letter == "D" || letter == "D.") {
+                    chordName += "D";
+                }
+                else if (letter == "e" || letter == "e." || letter == "E" || letter == "E.") {
+                    chordName += "E";
+                }
+                else if (letter == "f" || letter == "f." || letter == "F" || letter == "F.") {
+                    chordName += "F";
+                }
+                else if (letter == "g" || letter == "g." || letter == "G" || letter == "G.") {
+                    chordName += "G";
+                }
+                else if (letter == "a" || letter == "a." || letter == "A" || letter == "A.") {
+                    chordName += "A";
+                }
+                else if (letter == "b" || letter == "b." || letter == "B" || letter == "B.") {
+                    chordName += "B";
+                }
+                else {
+                    chordName += "C";
+                }
+            }
+
+            if (typeof this.event.request.intent.slots.TypeOne.value != "undefined") {
+                var typeOne = this.event.request.intent.slots.TypeOne.value;
+                if (typeOne == "major" || typeOne == "minor" || typeOne == "seven") {
+                    chordName += " " + typeOne;
+                }
+            }
+
+            if (typeof this.event.request.intent.slots.TypeTwo.value != "undefined") {
+                var typeTwo = this.event.request.intent.slots.TypeTwo.value;
+                if (typeTwo == "seven") {
+                    chordName += " " + typeTwo;
+                }
+            }
+            chordsToPlay.push(chordName);
+
+            // DEBUG
+            console.log("CHORD MADE:");
+            console.log(chordName);
+
+            this.attributes['playOrder'] = chordsToPlay;
+            this.attributes['index'] = 0;
+            this.attributes['playbackIndexChanged'] = true;
+            this.attributes['playingNotes'] = false;
+            this.attributes['playingChords'] = true;
+            controller.playChords.call(this);
         },
         'ChangeInstrumentIntent' : function () {
             // TODO Implement me
+            // DEBUG
+            console.log("CHANGING INSTRUMENTS");
+
+            if (typeof this.event.request.intent.slots.Instruments.value != "undefined") {
+                var changeInstr = this.event.request.intent.slots.Instruments.value;
+                var message = "Changed instrument, what note or chord would you like to hear?";
+                var reprompt = whatCanISay;
+                // TODO Give image
+                switch (changeInstr) {
+                    case "piano":
+                        instrumentNotes = pianoNotes;
+                        instrumentChords = pianoChords;
+                        var cardTitle = "Piano";
+                        var cardContent = "Changed instrument to piano."
+                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, null);
+                        break;
+                    case "violin":
+                        instrumentNotes = violinNotes;
+                        instrumentChords = violinChords;
+                        var cardTitle = "Violin";
+                        var cardContent = "Changed instrument to violin."
+                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, null);
+                        break;
+                    case "guitar":
+                        instrumentNotes = guitarNotes;
+                        instrumentChords = guitarChords;
+                        var cardTitle = "Guitar";
+                        var cardContent = "Changed instrument to guitar."
+                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, null);
+                        break;
+                }
+            }
         },
         'AMAZON.HelpIntent' : function () {
-            this.emit(":tell", whatCanISay);
+            this.emit(":ask", whatCanISay);
         },
         'AMAZON.StopIntent' : function () {
             this.emit(":tell", exitTxt);
@@ -265,10 +314,11 @@ var stateHandlers = {
             this.emit(":tell", exitTxt);
         },
         'SessionEndedRequest' : function () {
-            // No session ended logic
+            this.emit(":tell", "Good riddance.");
         },
         'Unhandled' : function () {
-            this.emit(":tell", unhandledTxt);
+            this.handler.state = constants.states.START_MODE;
+            this.emit(":ask", unhandledTxt);
         }
     }),
 
@@ -301,14 +351,25 @@ var stateHandlers = {
         // Controller will handle playing logic, this is just here to go 
         // through the play queue.
         'PlayNoteIntent' : function () {
-            // TODO fixme?
+            // DEBUG
             console.log("PLAY_MODE: PlayNoteIntent");
 
             if (this.attributes['index'] == -1) {
-                this.handler.state = START_MODE;
+                this.handler.state = constants.states.START_MODE;
                 this.emitWithState("Start");
             }
             controller.playNotes.call(this);
+        },
+        "PlayChordIntent" : function () {
+            // DEBUG
+            console.log("PLAY_MODE: PlayChordIntent");
+
+            if (this.attributes['index'] == -1) {
+                this.handler.state = constants.states.START_MODE;
+                this.emitWithState("Start");
+            }
+            controller.playChords.call(this);
+            
         },
         // TODO We don't need these funcitonally, but the audio stream
         // directives require these intents be implemented. Just go back to
@@ -325,15 +386,13 @@ var stateHandlers = {
         'AMAZON.ShuffleOffIntent' : function () { controller.shuffleOff.call(this) },
         'AMAZON.StartOverIntent' : function () { controller.startOver.call(this) },
         'AMAZON.HelpIntent' : function () {
-
-            // This will called while audio is playing and a user says "ask <invocation_name> for help"
             this.emit(":ask", whatCanISay);
         },
         'SessionEndedRequest' : function () {
             // No session ended logic
         },
         'Unhandled' : function () {
-            this.emit(":tell", unhandledTxt);
+            this.emit(":ask", unhandledTxt);
         }
     }),
     remoteControllerHandlers : Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
@@ -354,7 +413,6 @@ module.exports = stateHandlers;
 var controller = function () {
     return {
         playNotes: function () {
-            // TODO Test me
             // DEBUG
             console.log("CONTROLLER: playNotes");
 
@@ -379,9 +437,46 @@ var controller = function () {
             console.log("attributes:");
             console.log(this.attributes);
 
+            // Getting note letter.
+            // Assuming title is "Note X"
+            // TODO Fix the mod 7 when adding sharp and flat notes.
+            var noteNumber = parseInt(note.title.split(" ")[1]);
+            var noteNumberMod = noteNumber % 7;
+            var letter = "Bagles";
+            switch (noteNumberMod) {
+                case 0:
+                    letter = "C";
+                    break;
+                case 1:
+                    letter = "D";
+                    break;
+                case 2:
+                    letter = "E";
+                    break;
+                case 3:
+                    letter = "F";
+                    break;
+                case 4:
+                    letter = "G";
+                    break;
+                case 5:
+                    letter = "A";
+                    break;
+                case 6:
+                    letter = "B";
+                    break;
+            }
+
+            // DEBUG
+            console.log("noteNumber");
+            console.log(noteNumber);
+            console.log("noteNumberMod");
+            console.log(noteNumberMod);
+            console.log(note.title.split());
+
             if (canThrowCard.call(this)) {
-                var cardTitle = 'Playing ' + note.title;
-                var cardContent = 'Playing ' + note.title;
+                var cardTitle = 'Playing ' + letter;
+                var cardContent = 'Playing ' + letter;
                 this.response.cardRenderer(cardTitle, cardContent, null);
             }
 
@@ -394,8 +489,56 @@ var controller = function () {
             // session doesn't just end after asking for one note.
             this.emit(":responseReady");
         },
-        playChord: function (){
-            // TODO Implement me
+        playChords: function (){
+            // DEBUG
+            console.log("CONTROLLER: playChords");
+            console.log(this.attributes);
+            console.log(instrumentChords);
+
+            this.handler.state = constants.states.PLAY_MODE;
+
+            // Done playing notes, going back to main menu.
+            if (this.attributes['playbackFinished']) {
+                this.attributes['playbackFinished'] = false;
+                this.handler.state = constants.states.START_MODE;
+                // this.emitWithState("Start");
+                this.emit(":tell", mainMenuTxt);
+            }
+
+            var token = String(this.attributes['playOrder'][this.attributes['index']]);
+            var playBehavior = "REPLACE_ALL";
+            var chordName = this.attributes['playOrder'][this.attributes['index']]
+            var chord = instrumentChords[this.attributes['playOrder'][this.attributes['index']]];
+            var offsetInMilliseconds = this.attributes['offsetInMilliseconds'];
+            // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
+
+            // DEBUG
+            console.log("CHORD FROM PLAYORDER");
+            console.log(chord);
+            console.log(instrumentChords[chord]);
+
+            this.attributes['enqueuedToken'] = null;
+            if (!chord) {
+                url = instrumentChords["C major"].url;
+                chordName = "C major";
+            } else {
+                var url = chord.url;
+            }
+
+            if (canThrowCard.call(this)) {
+                var cardTitle = 'Playing ' + chordName;
+                var cardContent = 'Playing ' + chordName;
+                this.response.cardRenderer(cardTitle, cardContent, null);
+            }
+
+            // DEBUG
+            console.log("URL PLAYED");
+            console.log(url);
+
+            this.response.audioPlayerPlay(playBehavior, url, token, null, offsetInMilliseconds);
+            // TODO Ask response from user after playing all audios so
+            // session doesn't just end after asking for one note.
+            this.emit(":responseReady");
         },
         stop: function () {
             // Do nothing.

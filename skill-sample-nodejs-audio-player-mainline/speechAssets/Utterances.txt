@@ -1,8 +1,25 @@
 PlayNoteIntent play a {NoteOne} note
+PlayNoteIntent to play a {NoteOne} note
+PlayNoteIntent play an {NoteOne} note
+PlayNoteIntent to play an {NoteOne} note
 PlayNoteIntent play a {NoteOne} {NoteTwo} note
+PlayNoteIntent to play a {NoteOne} {NoteTwo} note
+PlayNoteIntent play a {NoteOne} and {NoteTwo} note
+PlayNoteIntent to play a {NoteOne} and {NoteTwo} note
 PlayNoteIntent play a {NoteOne} {NoteTwo} {NoteThree} note
+PlayNoteIntent to play a {NoteOne} {NoteTwo} {NoteThree} note
+PlayNoteIntent play a {NoteOne} {NoteTwo} and {NoteThree} note
+PlayNoteIntent to play a {NoteOne} {NoteTwo} and {NoteThree} note
+
 PlayChordIntent play a {Chords} chord
+PlayChordIntent to play a {Chords} chord
+PlayChordIntent play a {Chords} {TypeOne} chord
+PlayChordIntent to play a {Chords} {TypeOne} chord
+PlayChordIntent play a {Chords} {TypeOne} {TypeTwo} chord
+PlayChordIntent to play a {Chords} {TypeOne} {TypeTwo} chord
+
 ChangeInstrumentIntent change the instrument to {Instruments}
+ChangeInstrumentIntent change instruments to {Instruments}
 
 UnhandledIntent osidfjosdifjdsoi
 UnhandledIntent sfknsdfojsdof

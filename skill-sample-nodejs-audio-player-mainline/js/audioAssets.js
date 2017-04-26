@@ -39,45 +39,102 @@ var pianoNotes = [
     }
 ];
 
-var pianoChords = [
+var pianoChords = {
     // TODO Add chords
-    {
-        'title' : 'Chord X',
-        'url' : 'chord_url.mp3'
-    }
-];
+    'C major' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3' } ,
+    'D minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3' },
+    'E minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3' },
+    'F major' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3' },
+    'G major' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3' },
+    'A minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3' },
+    'B major' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3.mp3' }
+};
 
 var violinNotes = [
     // TODO Add notes
     {
-    	'title' : 'Note X',
+    	'title' : 'Note 7',
+    	'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3'
+    },
+    {
+    	'title' : 'Note 8',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 9',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 10',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 11',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 12',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 13',
     	'url' : 'note_url.mp3'
     }
 ];
 
-var violinChords = [
+var violinChords = {
     // TODO Add chords
-    {
-    	'title' : 'Chord X',
-    	'url' : 'chord_url.mp3'
-    }
-];
+    'C major' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3' } ,
+    'D minor' : { 'url' : 'fixme.mp3' },
+    'E minor' : { 'url' : 'fixme.mp3' },
+    'F major' : { 'url' : 'fixme.mp3' },
+    'G major' : { 'url' : 'fixme.mp3' },
+    'A minor' : { 'url' : 'fixme.mp3' },
+    'B major' : { 'url' : 'fixme.mp3' }
+};
 
 var guitarNotes = [
     // TODO Add notes
     {
-    	'title' : 'Note X',
+    	'title' : 'Note 7',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 8',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 9',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 10',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 11',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 12',
+    	'url' : 'note_url.mp3'
+    },
+    {
+    	'title' : 'Note 13',
     	'url' : 'note_url.mp3'
     }
 ];
 
-var guitarChords = [
+var guitarChords = {
     // TODO Add chords
-    {
-    	'title' : 'Chord X',
-    	'url' : 'chord_url.mp3'
-    }
-];
+    'C major' : { 'url' : 'chord_url.mp3' } ,
+    'D minor' : { 'url' : 'fixme.mp3' },
+    'E minor' : { 'url' : 'fixme.mp3' },
+    'F major' : { 'url' : 'fixme.mp3' },
+    'G major' : { 'url' : 'fixme.mp3' },
+    'A minor' : { 'url' : 'fixme.mp3' },
+    'B major' : { 'url' : 'fixme.mp3' }
+};
 
 
 module.exports = {
@@ -88,12 +145,4 @@ module.exports = {
     guitarNotes,
     guitarChords
 };
-
-// module.exports = audioData;
-// module.exports = pianoNotes;
-// module.exports = pianoChords;
-// module.exports = violinNotes;
-// module.exports = violinChords;
-// module.exports = guitarNotes;
-// module.exports = guitarChords;
 

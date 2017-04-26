@@ -14,26 +14,14 @@ var guitarChords = audioAssets.guitarChords;
 // Binding audio handlers to PLAY_MODE State since they are expected only in this mode.
 var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
     'PlaybackStarted' : function () {
-        /*
-         * AudioPlayer.PlaybackStarted Directive received.
-         * Confirming that requested audio file began playing.
-         * Storing details in dynamoDB using attributes.
-         */
         // DEBUG
         console.log("PLAYBACK STARTED");
 
         this.attributes['token'] = getToken.call(this);
         this.attributes['index'] = getIndex.call(this);
         this.attributes['playbackFinished'] = false;
-
-        // this.emit(':saveState', true);
     },
     'PlaybackFinished' : function () {
-        /*
-         * AudioPlayer.PlaybackFinished Directive received.
-         * Confirming that audio file completed playing.
-         * Storing details in dynamoDB using attributes.
-         */
         // DEBUG
         console.log("PLAYBACK FINISHED");
 
@@ -42,40 +30,15 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
  
         // DEBUG
         this.handler.state = constants.states.START_MODE;
-        // this.emit(':saveState', true);
     },
     'PlaybackStopped' : function () {
-        /*
-         * AudioPlayer.PlaybackStopped Directive received.
-         * Confirming that audio file stopped playing.
-         * Storing details in dynamoDB using attributes.
-         */
-        // DEBUG
         console.log("PLAYBACK STOPPED");
-
-        // this.attributes['token'] = getToken.call(this);
-        // this.attributes['index'] = getIndex.call(this);
-        // this.attributes['offsetInMilliseconds'] = getOffsetInMilliseconds.call(this);
-
-        // this.emit(':saveState', true);
     },
     'PlaybackNearlyFinished' : function () {
-        /*
-         * AudioPlayer.PlaybackNearlyFinished Directive received.
-         * Using this opportunity to enqueue the next audio
-         * Storing details in dynamoDB using attributes.
-         * Enqueuing the next audio file.
-         */
-
         // DEBUG
         console.log("PLAYBACK NEARLY FINISHED");
 
         if (this.attributes['enqueuedToken']) {
-            /*
-             * Since AudioPlayer.PlaybackNearlyFinished Directive are prone to be delivered multiple times during the
-             * same audio being played.
-             * If an audio file is already enqueued, exit without enqueuing again.
-             */
             return this.context.succeed(true);
         }
         
