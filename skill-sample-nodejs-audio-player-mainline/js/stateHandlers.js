@@ -16,8 +16,8 @@ var noteName = "Note "
 var chordName = "Chord "
 
 // Instrument to play
-var instrumentNotes = pianoNotes;
-var instrumentChords = pianoChords;
+var instrumentNotes = guitarNotes;
+var instrumentChords = guitarChords;
 
 // Notes determined by octave * 7 + noteToNum()
 // TODO When adding more octave later change default octave to 2
