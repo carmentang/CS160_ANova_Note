@@ -1,5 +1,53 @@
 'use strict';
 
+var instrumentImages = {
+    'PIANO' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/instrument_images/piano-01.png',
+    'VIOLIN' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/instrument_images/violin-01.png',
+    'GUITAR' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/instrument_images/guitar-01.png'
+};
+    
+
+var noteImages = [
+    {
+        'title' : 'Note 7',
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/c_note-01.png'
+    },
+    {
+        'title' : 'Note 8',
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/d_note-01.png'
+    },
+    {
+        'title' : 'Note 9',
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/e_note-01.png'
+    },
+    {
+        'title' : 'Note 10',
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/f_note-01.png'
+    },
+    {
+        'title' : 'Note 11',
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/g_note-01.png'
+    },
+    {
+        'title' : 'Note 12',
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/a_note-01.png'
+    },
+    {
+        'title' : 'Note 13',
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/b_note-01.png'
+    }
+];
+
+var chordImages = {
+    'C major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_chord-01.png' } ,
+    'D minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_minor_chord-01.png' },
+    'E minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/e_minor_chord-01.png' },
+    'F major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_chord-01.png' },
+    'G major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_chord-01.png' },
+    'A minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_minor_chord-01.png' },
+    'B minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/b_chord-01.png' }
+};
+
 var pianoNotes = [
     // TODO Add lower octove note 0-6, and higher octave notes 14-20
     {
@@ -143,6 +191,9 @@ module.exports = {
     violinNotes,
     violinChords,
     guitarNotes,
-    guitarChords
+    guitarChords,
+    noteImages,
+    chordImages,
+    instrumentImages
 };
 

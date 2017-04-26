@@ -10,6 +10,9 @@ var violinNotes = audioAssets.violinNotes;
 var violinChords = audioAssets.violinChords;
 var guitarNotes = audioAssets.guitarNotes;
 var guitarChords = audioAssets.guitarChords;
+var noteImages = audioAssets.noteImages;
+var chordImages = audioAssets.chordImages;
+var instrumentImages = audioAssets.instrumentImages;
 
 // To be used as noteName + num, where num is 1, 2, ...
 var noteName = "Note "
@@ -285,21 +288,24 @@ var stateHandlers = {
                         instrumentChords = pianoChords;
                         var cardTitle = "Piano";
                         var cardContent = "Changed instrument to piano."
-                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, null);
+                        var imageUrl = { 'largeImageUrl' : instrumentImages['PIANO']};
+                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, imageUrl);
                         break;
                     case "violin":
                         instrumentNotes = violinNotes;
                         instrumentChords = violinChords;
                         var cardTitle = "Violin";
                         var cardContent = "Changed instrument to violin."
-                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, null);
+                        var imageUrl = { 'largeImageUrl' : instrumentImages['VIOLIN'] };
+                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, imageUrl);
                         break;
                     case "guitar":
                         instrumentNotes = guitarNotes;
                         instrumentChords = guitarChords;
                         var cardTitle = "Guitar";
                         var cardContent = "Changed instrument to guitar."
-                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, null);
+                        var imageUrl = { 'largeImageUrl' : instrumentImages['GUITAR'] };
+                        this.emit(":askWithCard", message, reprompt, cardTitle, cardContent, imageUrl);
                         break;
                 }
             }
@@ -474,10 +480,16 @@ var controller = function () {
             console.log(noteNumberMod);
             console.log(note.title.split());
 
+            var imageUrl = { 'largeImageUrl' : noteImages[noteNumberMod]['url'] };
+
+            // DEBUG
+            console.log("IMAGE URL:");
+            console.log(imageUrl);
+
             if (canThrowCard.call(this)) {
                 var cardTitle = 'Playing ' + letter;
                 var cardContent = 'Playing ' + letter;
-                this.response.cardRenderer(cardTitle, cardContent, null);
+                this.response.cardRenderer(cardTitle, cardContent, imageUrl);
             }
 
             // DEBUG
@@ -525,10 +537,16 @@ var controller = function () {
                 var url = chord.url;
             }
 
+            var imageUrl = { 'largeImageUrl' : chordImages[this.attributes['playOrder'][this.attributes['index']]]['url'] };
+ 
+            // DEBUG
+            console.log("IMAGE URL:");
+            console.log(imageUrl);
+
             if (canThrowCard.call(this)) {
                 var cardTitle = 'Playing ' + chordName;
                 var cardContent = 'Playing ' + chordName;
-                this.response.cardRenderer(cardTitle, cardContent, null);
+                this.response.cardRenderer(cardTitle, cardContent, imageUrl);
             }
 
             // DEBUG
