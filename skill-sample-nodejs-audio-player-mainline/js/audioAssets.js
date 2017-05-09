@@ -108,142 +108,180 @@ var chordImages = {
 };
 
 var pianoNotes = [
-    // TODO Add lower octove note 0-6, and higher octave notes 14-20
     {
         // C note
     	'title' : 'Note 0',
-    	'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3'
+    	'url' : 'https://feeds.soundcloud.com/stream/319252561-user-188005641-39175-jobro-piano-ff-028.mp3'
     },
     {
         // C#/Db  note
     	'title' : 'Note 1',
-    	'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3'
+    	'url' : 'https://feeds.soundcloud.com/stream/321767680-user-188005641-39176-jobro-piano-ff-029.mp3'
     },
     {
         // D note
         'title' : 'Note 2',
-        'url' : 'https://feeds.soundcloud.com/stream/319252561-user-188005641-39175-jobro-piano-ff-028.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/319252555-user-188005641-39177-jobro-piano-ff-030.mp3'
     },
     {
         // D#/Eb note
         'title' : 'Note 3',
-        'url' : 'https://feeds.soundcloud.com/stream/319252561-user-188005641-39175-jobro-piano-ff-028.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/319252550-user-188005641-39178-jobro-piano-ff-031.mp3'
     },
     {
         // E
         'title' : 'Note 4',
-        'url' : 'https://feeds.soundcloud.com/stream/319252555-user-188005641-39177-jobro-piano-ff-030.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/321767738-user-188005641-39179-jobro-piano-ff-032.mp3'
     },
     {
         // F
         'title' : 'Note 5',
-        'url' : 'https://feeds.soundcloud.com/stream/319252550-user-188005641-39178-jobro-piano-ff-031.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/319252545-user-188005641-39180-jobro-piano-ff-033.mp3'
     },
     {
         // F#/Gb
         'title' : 'Note 6',
-        'url' : 'https://feeds.soundcloud.com/stream/319252550-user-188005641-39178-jobro-piano-ff-031.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/321767748-user-188005641-39181-jobro-piano-ff-034.mp3'
     },
     {
         // G
         'title' : 'Note 7',
-        'url' : 'https://feeds.soundcloud.com/stream/319252545-user-188005641-39180-jobro-piano-ff-033.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/319252537-user-188005641-39182-jobro-piano-ff-035.mp3'
     },
     {
         // G#/Ab
         'title' : 'Note 8',
-        'url' : 'https://feeds.soundcloud.com/stream/319252545-user-188005641-39180-jobro-piano-ff-033.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/321767759-user-188005641-39183-jobro-piano-ff-036.mp3'
     },
     {
         // A
         'title' : 'Note 9',
-        'url' : 'https://feeds.soundcloud.com/stream/319252537-user-188005641-39182-jobro-piano-ff-035.mp3'
+        'url' : 'http://feeds.soundcloud.com/stream/319252534-user-188005641-39184-jobro-piano-ff-037.mp3'
     },
     {
         // A#/Bb
         'title' : 'Note 10',
-        'url' : 'https://feeds.soundcloud.com/stream/319252537-user-188005641-39182-jobro-piano-ff-035.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/321769122-user-188005641-39185-jobro-piano-ff-038.mp3'
     },
     {
         // B
         'title' : 'Note 11',
-        'url' : 'https://feeds.soundcloud.com/stream/319252534-user-188005641-39184-jobro-piano-ff-037.mp3'
+        'url' : 'https://feeds.soundcloud.com/stream/321767766-user-188005641-39186-jobro-piano-ff-039.mp3'
     }
 ];
 
 var pianoChords = {
-    // TODO Add chords
-    'C major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502949-user-188005641-grand-piano-fazioli-major-c-middle.mp3' } ,
-    'C minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502949-user-188005641-grand-piano-fazioli-major-c-middle.mp3' } ,
-    'C# major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502949-user-188005641-grand-piano-fazioli-major-c-middle.mp3' } ,
-    'C# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502949-user-188005641-grand-piano-fazioli-major-c-middle.mp3' } ,
-    'D major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502831-user-188005641-grand-piano-fazioli-minor-chords-dm-lower.mp3' },
+    'C major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773226-user-188005641-grand-piano-fazioli-major-c-low.mp3' } ,
+    'C minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772965-user-188005641-grand-piano-fazioli-minor-chords-cm-lower.mp3' } ,
+    'C# major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773216-user-188005641-grand-piano-fazioli-major-c-sharp.mp3' } ,
+    'C# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772990-user-188005641-grand-piano-fazioli-minor-chords-cm-sharp-lower.mp3' } ,
+    'Db major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773216-user-188005641-grand-piano-fazioli-major-c-sharp.mp3' } ,
+    'Db minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772990-user-188005641-grand-piano-fazioli-minor-chords-cm-sharp-lower.mp3' } ,
+    'D major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773203-user-188005641-grand-piano-fazioli-major-d.mp3' },
     'D minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502831-user-188005641-grand-piano-fazioli-minor-chords-dm-lower.mp3' },
-    'D# major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502831-user-188005641-grand-piano-fazioli-minor-chords-dm-lower.mp3' },
-    'D# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502831-user-188005641-grand-piano-fazioli-minor-chords-dm-lower.mp3' },
-    'E major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502795-user-188005641-grand-piano-fazioli-minor-chords-em-lower.mp3' },
-    'E minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502795-user-188005641-grand-piano-fazioli-minor-chords-em-lower.mp3' },
-    'F major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502936-user-188005641-grand-piano-fazioli-major-f-middle.mp3' },
-    'F minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502936-user-188005641-grand-piano-fazioli-major-f-middle.mp3' },
-    'F# major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502936-user-188005641-grand-piano-fazioli-major-f-middle.mp3' },
-    'F# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502936-user-188005641-grand-piano-fazioli-major-f-middle.mp3' },
-    'G major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502924-user-188005641-grand-piano-fazioli-major-g-middle.mp3' },
-    'G minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502924-user-188005641-grand-piano-fazioli-major-g-middle.mp3' },
-    'G# major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502924-user-188005641-grand-piano-fazioli-major-g-middle.mp3' },
-    'G# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502924-user-188005641-grand-piano-fazioli-major-g-middle.mp3' },
-    'A major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502896-user-188005641-grand-piano-fazioli-minor-chords-am-lower.mp3' },
-    'A minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502896-user-188005641-grand-piano-fazioli-minor-chords-am-lower.mp3' },
-    'A# major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502896-user-188005641-grand-piano-fazioli-minor-chords-am-lower.mp3' },
-    'A# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502896-user-188005641-grand-piano-fazioli-minor-chords-am-lower.mp3' },
-    'B major' : { 'url' : 'https://feeds.soundcloud.com/stream/319502866-user-188005641-grand-piano-fazioli-minor-chords-bm-lower.mp3' },
-    'B minor' : { 'url' : 'https://feeds.soundcloud.com/stream/319502866-user-188005641-grand-piano-fazioli-minor-chords-bm-lower.mp3' }
+    'D# major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773189-user-188005641-grand-piano-fazioli-major-d-sharp.mp3' },
+    'D# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772945-user-188005641-grand-piano-fazioli-minor-chords-dm-sharp-lower.mp3' },
+    'Eb major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773189-user-188005641-grand-piano-fazioli-major-d-sharp.mp3' },
+    'Eb minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772945-user-188005641-grand-piano-fazioli-minor-chords-dm-sharp-lower.mp3' },
+    'E major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773173-user-188005641-grand-piano-fazioli-major-e.mp3' },
+    'E minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772911-user-188005641-grand-piano-fazioli-minor-chords-em-lower.mp3' },
+    'F major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773156-user-188005641-grand-piano-fazioli-major-f.mp3' },
+    'F minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772863-user-188005641-grand-piano-fazioli-minor-chords-fm-lower.mp3' },
+    'F# major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773133-user-188005641-grand-piano-fazioli-major-f-sharp.mp3' },
+    'F# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772892-user-188005641-grand-piano-fazioli-minor-chords-fm-sharp-lower.mp3' },
+    'Gb major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773133-user-188005641-grand-piano-fazioli-major-f-sharp.mp3' },
+    'Gb minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772892-user-188005641-grand-piano-fazioli-minor-chords-fm-sharp-lower.mp3' },
+    'G major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773109-user-188005641-grand-piano-fazioli-major-g.mp3' },
+    'G minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772700-user-188005641-grand-piano-fazioli-minor-chords-gm-lower.mp3' },
+    'G# major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773090-user-188005641-grand-piano-fazioli-major-g-sharp.mp3' },
+    'G# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772845-user-188005641-grand-piano-fazioli-minor-chords-gm-sharp-lower.mp3' },
+    'Ab major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773090-user-188005641-grand-piano-fazioli-major-g-sharp.mp3' },
+    'Ab minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321772845-user-188005641-grand-piano-fazioli-minor-chords-gm-sharp-lower.mp3' },
+    'A major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773263-user-188005641-grand-piano-fazioli-major-a.mp3' },
+    'A minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321773025-user-188005641-grand-piano-fazioli-minor-chords-am-lower.mp3' },
+    'A# major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773251-user-188005641-grand-piano-fazioli-major-a-sharp.mp3' },
+    'A# minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321773062-user-188005641-grand-piano-fazioli-minor-chords-am-sharp-lower.mp3' },
+    'Bb major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773251-user-188005641-grand-piano-fazioli-major-a-sharp.mp3' },
+    'Bb minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321773062-user-188005641-grand-piano-fazioli-minor-chords-am-sharp-lower.mp3' },
+    'B major' : { 'url' : 'https://feeds.soundcloud.com/stream/321773237-user-188005641-grand-piano-fazioli-major-b.mp3' },
+    'B minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321773005-user-188005641-grand-piano-fazioli-minor-chords-bm-lower.mp3' }
 };
 
 var violinNotes = [
-    // TODO Add notes
     {
+        // C
+    	'title' : 'Note 0',
+    	'url' : 'https://feeds.soundcloud.com/stream/321780440-user-188005641-153590-carlos-vaquero-violin-c-5-tenuto-non-vibrato.mp3'
+    },
+    {
+        // C#/Db
+    	'title' : 'Note 1',
+    	'url' : 'https://feeds.soundcloud.com/stream/321780423-user-188005641-153591-carlos-vaquero-violin-c-5-sharp-tenuto-non-vibrato.mp3'
+    },
+    {
+        // D
+    	'title' : 'Note 2',
+    	'url' : 'https://feeds.soundcloud.com/stream/321780406-user-188005641-153592-carlos-vaquero-violin-d-5-tenuto-non-vibrato.mp3'
+    },
+    {
+        // D#/Eb
+    	'title' : 'Note 3',
+    	'url' : 'https://feeds.soundcloud.com/stream/321780386-user-188005641-153593-carlos-vaquero-violin-d-5-sharp-tenuto-non-vibrato.mp3'
+    },
+    {
+        // E
+    	'title' : 'Note 4',
+    	'url' : 'https://feeds.soundcloud.com/stream/321780360-user-188005641-153594-carlos-vaquero-violin-e-5-tenuto-non-vibrato.mp3'
+    },
+    {
+        // F
+    	'title' : 'Note 5',
+    	'url' : 'https://feeds.soundcloud.com/stream/321780343-user-188005641-153595-carlos-vaquero-violin-f-5-tenuto-non-vibrato.mp3'
+    },
+    {
+        // F#/Gb
+    	'title' : 'Note 6',
+    	'url' : 'https://feeds.soundcloud.com/stream/321780325-user-188005641-153596-carlos-vaquero-violin-f-5-sharp-tenuto-non-vibrato.mp3'
+    },
+    {
+        // G
     	'title' : 'Note 7',
-    	'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3'
+    	'url' : 'https://feeds.soundcloud.com/stream/321780545-user-188005641-153585-carlos-vaquero-violin-g-4-tenuto-non-vibrato.mp3'
     },
     {
+        // G#/Ab
     	'title' : 'Note 8',
-    	'url' : 'note_url.mp3'
+    	'url' : 'https://feeds.soundcloud.com/stream/321780522-user-188005641-153586-carlos-vaquero-violin-g-4-sharp-tenuto-non-vibrato.mp3'
     },
     {
+        // A
     	'title' : 'Note 9',
-    	'url' : 'note_url.mp3'
+    	'url' : 'https://feeds.soundcloud.com/stream/321780510-user-188005641-153587-carlos-vaquero-violin-a-4-tenuto-non-vibrato.mp3'
     },
     {
+        // A#/Bb
     	'title' : 'Note 10',
-    	'url' : 'note_url.mp3'
+    	'url' : 'https://feeds.soundcloud.com/stream/321780485-user-188005641-153588-carlos-vaquero-violin-a-4-sharp-tenuto-non-vibrato.mp3'
     },
     {
+        // B
     	'title' : 'Note 11',
-    	'url' : 'note_url.mp3'
-    },
-    {
-    	'title' : 'Note 12',
-    	'url' : 'note_url.mp3'
-    },
-    {
-    	'title' : 'Note 13',
-    	'url' : 'note_url.mp3'
+    	'url' : 'https://feeds.soundcloud.com/stream/321780460-user-188005641-153589-carlos-vaquero-violin-b-4-tenuto-non-vibrato.mp3'
     }
 ];
 
 var violinChords = {
-    // TODO Add chords
-    'C major' : { 'url' : 'https://feeds.soundcloud.com/stream/319252567-user-188005641-39173-jobro-piano-ff-026.mp3' } ,
-    'D minor' : { 'url' : 'fixme.mp3' },
-    'E minor' : { 'url' : 'fixme.mp3' },
-    'F major' : { 'url' : 'fixme.mp3' },
-    'G major' : { 'url' : 'fixme.mp3' },
-    'A minor' : { 'url' : 'fixme.mp3' },
-    'B minor' : { 'url' : 'fixme.mp3' }
+    // TODO Can't find free violin chord sound library
+    'C major' : { 'url' : '' } ,
+    'D minor' : { 'url' : '' },
+    'E minor' : { 'url' : '' },
+    'F major' : { 'url' : '' },
+    'G major' : { 'url' : '' },
+    'A minor' : { 'url' : '' },
+    'B minor' : { 'url' : '' }
 };
 
 var guitarNotes = [
-    // TODO Add notes
     {
         // C
     	'title' : 'Note 0',
@@ -307,7 +345,6 @@ var guitarNotes = [
 ];
 
 var guitarChords = {
-    // TODO Add chords
     'C major' : { 'url' : 'https://feeds.soundcloud.com/stream/319508157-user-188005641-guitar-c-chord.mp3' } ,
     'C minor' : { 'url' : 'https://feeds.soundcloud.com/stream/321674402-user-188005641-guitar-cm-chord.mp3' } ,
     'C# major' : { 'url' : 'https://feeds.soundcloud.com/stream/321674390-user-188005641-guitar-c-sharp-chord.mp3' } ,

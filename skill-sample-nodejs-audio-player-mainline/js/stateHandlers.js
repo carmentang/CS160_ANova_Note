@@ -22,8 +22,6 @@ var chordName = "Chord "
 var instrumentNotes = guitarNotes;
 var instrumentChords = guitarChords;
 
-// Notes determined by octave * 7 + noteToNum()
-// TODO When adding more octave later change default octave to 2
 var numHalfSteps = 12;
 var octave = 0;
 var MAX_OCTAVE = 3;
@@ -35,77 +33,6 @@ var changeInstrHelp = "The available instruments are piano, violin, and guitar."
 var exitTxt = "Good riddance."
 var unhandledTxt= "Don't sass me. I'm going back to main menu. If you want to know what you can say, say help me. Now how hard is that?"
 var notSupportedTxt = "This command is not supported, do not sass me again."
-
-var noteToNum = function (note) {
-    // TODO Include sharp and flat notes later
-    switch (note) {
-        case "c":
-            return 0;
-        case "d":
-            return 1;
-        case "e":
-            return 2;
-        case "f":
-            return 3;
-        case "g":
-            return 4;
-        case "a":
-            return 5;
-        case "b":
-            return 6;
-    }
-};
-
-var noteIndex = function (note) {
-    /*
-    Params:
-        note : string
-    */
-    var noteNum = noteToNum(note);
-    return octave * 7 + noteToNum;
-};
-
-var getNoteIndexes = function (notes) {
-    /*
-    Params:
-        notes : array
-    */
-    var noteIndexes = []
-    for (var i = 0; i < notes.length; i++) {
-        noteIndexes.push(noteIndex(notes[i]));
-    }
-    return noteIndexes;
-    
-};
-
-
-var changeInstrument  = function (instrument) {
-    // Change instrument variable
-    switch (instrument) {
-        case constants.instruments.PIANO:
-            instrumentNotes = pianoNotes;
-            instrumentChords = pianochords;
-            break;
-        case constants.instruments.VIOLIN:
-            instrumentNotes = violinNotes;
-            instrumentChords = violinChords;
-            break;
-        case constants.instruments.GUITAR:
-            instrumentNotes = guitarNotes;
-            instrumentChords = guitarChords;
-            break;
-    }
-};
-
-var changeOctave = function () {
-    octave += 1;
-    if (octave > MAX_OCTAVE) {
-        octave = MAX_OCTAVE;
-    }
-    if (octave < 0) {
-        octave = 0;
-    }
-};
 
 var newSessionHandlers = {
     "LaunchRequest" : function () {
@@ -294,7 +221,6 @@ var stateHandlers = {
             controller.playChords.call(this);
         },
         'ChangeInstrumentIntent' : function () {
-            // TODO Implement me
             // DEBUG
             console.log("CHANGING INSTRUMENTS");
 
@@ -302,7 +228,6 @@ var stateHandlers = {
                 var changeInstr = this.event.request.intent.slots.Instruments.value;
                 var message = "Changed instrument, what note or chord would you like to hear?";
                 var reprompt = whatCanISay;
-                // TODO Give image
                 switch (changeInstr) {
                     case "piano":
                         instrumentNotes = pianoNotes;
@@ -314,7 +239,8 @@ var stateHandlers = {
                         break;
                     case "violin":
                         instrumentNotes = violinNotes;
-                        instrumentChords = violinChords;
+                        // TODO Hard to find free violin chord sound library...
+                        // instrumentChords = violinChords;
                         var cardTitle = "Violin";
                         var cardContent = "Changed instrument to violin."
                         var imageUrl = { 'largeImageUrl' : instrumentImages['VIOLIN'] };
@@ -398,7 +324,7 @@ var stateHandlers = {
             controller.playChords.call(this);
             
         },
-        // TODO We don't need these funcitonally, but the audio stream
+        // We don't need these funcitonally, but the audio stream
         // directives require these intents be implemented. Just go back to
         // main menu for them with warning saying this feature not available.
         'AMAZON.NextIntent' : function () { controller.playNext.call(this) },
@@ -426,8 +352,6 @@ var stateHandlers = {
         /*
          *  All Requests are received using a Remote Control. Calling corresponding handlers for each of them.
          */
-         // TODO fixme, might consider variable to tell if currently playing
-         // notes or chords.
         'PlayCommandIssued' : function () { controller.play.call(this) },
         'PauseCommandIssued' : function () { controller.stop.call(this) },
         'NextCommandIssued' : function () { controller.playNext.call(this) },
@@ -534,6 +458,8 @@ var controller = function () {
             this.response.audioPlayerPlay(playBehavior, note.url, token, null, offsetInMilliseconds);
             // TODO Ask response from user after playing all audios so
             // session doesn't just end after asking for one note.
+            // Might not be available through api as playing a sound starts
+            // on endSession attribute = true
             this.emit(":responseReady");
         },
         playChords: function (){
@@ -591,6 +517,8 @@ var controller = function () {
             this.response.audioPlayerPlay(playBehavior, url, token, null, offsetInMilliseconds);
             // TODO Ask response from user after playing all audios so
             // session doesn't just end after asking for one note.
+            // Might not be available through api as playing a sound starts
+            // on endSession attribute = true
             this.emit(":responseReady");
         },
         stop: function () {
