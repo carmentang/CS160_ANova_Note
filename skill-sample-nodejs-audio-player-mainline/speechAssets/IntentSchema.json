@@ -11,6 +11,10 @@
           "type": "CHORDS"
         },
         {
+          "name": "SharpFlat",
+          "type": "SHARP_FLAT"
+        },
+        {
           "name": "TypeOne",
           "type": "CHORD_TYPE"
         },
@@ -23,6 +27,10 @@
     {
       "intent": "PlayNoteIntent",
       "slots": [
+        {
+          "name": "SharpFlat",
+          "type": "SHARP_FLAT"
+        },
         {
           "name": "NoteOne",
           "type": "NOTES"

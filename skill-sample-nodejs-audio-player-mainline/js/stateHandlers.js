@@ -24,6 +24,7 @@ var instrumentChords = guitarChords;
 
 // Notes determined by octave * 7 + noteToNum()
 // TODO When adding more octave later change default octave to 2
+var numHalfSteps = 12;
 var octave = 0;
 var MAX_OCTAVE = 3;
 
@@ -156,56 +157,66 @@ var stateHandlers = {
         'PlayNoteIntent' : function () {
             // TODO Implement multiple notes
             var notes = [];
+            var letter = "";
+            var sharpFlat = "";
             if (typeof this.event.request.intent.slots.NoteOne.value != "undefined") {
-                notes.push(this.event.request.intent.slots.NoteOne.value);
+                letter = this.event.request.intent.slots.NoteOne.value;
             }
-            if (typeof this.event.request.intent.slots.NoteTwo.value != "undefined") {
-                notes.push(this.event.request.intent.slots.NoteTwo.value);
+            if (typeof this.event.request.intent.slots.SharpFlat.value != "undefined") {
+                sharpFlat = this.event.request.intent.slots.SharpFlat.value;
             }
-            if (typeof this.event.request.intent.slots.NoteThree.value != "undefined") {
-                notes.push(this.event.request.intent.slots.NoteThree.value);
-            }
+
+            // if (typeof this.event.request.intent.slots.NoteTwo.value != "undefined") {
+            //     notes.push(this.event.request.intent.slots.NoteTwo.value);
+            // }
+            // if (typeof this.event.request.intent.slots.NoteThree.value != "undefined") {
+            //     notes.push(this.event.request.intent.slots.NoteThree.value);
+            // }
             // var notesToPlay = getNoteIndexes(notes);
             var notesToPlay = [];
-            for (var i = 0; i < notes.length; i++) {
-                
-                // DEBUG
-                console.log("NOTE HEARD:");
-                console.log(notes[i]);
 
-                var noteNum = -1;
-                var letter = notes[i];
-                if (letter == "c" || letter == "c." || letter == "C" || letter == "C."){
-                    noteNum = 0;
-                }
-                else if (letter == "d" || letter == "d." || letter == "D" || letter == "D.") {
-                    noteNum = 1;
-                }
-                else if (letter == "e" || letter == "e." || letter == "E" || letter == "E.") {
-                    noteNum = 2;
-                }
-                else if (letter == "f" || letter == "f." || letter == "F" || letter == "F.") {
-                    noteNum = 3;
-                }
-                else if (letter == "g" || letter == "g." || letter == "G" || letter == "G.") {
-                    noteNum = 4;
-                }
-                else if (letter == "a" || letter == "a." || letter == "A" || letter == "A.") {
-                    noteNum = 5;
-                }
-                else if (letter == "b" || letter == "b." || letter == "B" || letter == "B.") {
-                    noteNum = 6;
-                }
-                else {
-                    noteNum = 0;
-                }
+            // DEBUG
+            console.log("NOTE HEARD:");
+            console.log(letter);
 
-                if (noteNum < 0) {
-                    noteNum = 0;
-                }
-                noteNum = octave * 7 + noteNum;
-                notesToPlay.push(noteNum);
+            var noteNum = -1;
+            if (letter == "c" || letter == "c." || letter == "C" || letter == "C."){
+                noteNum = 0;
             }
+            else if (letter == "d" || letter == "d." || letter == "D" || letter == "D.") {
+                noteNum = 2;
+            }
+            else if (letter == "e" || letter == "e." || letter == "E" || letter == "E.") {
+                noteNum = 4;
+            }
+            else if (letter == "f" || letter == "f." || letter == "F" || letter == "F.") {
+                noteNum = 5;
+            }
+            else if (letter == "g" || letter == "g." || letter == "G" || letter == "G.") {
+                noteNum = 7;
+            }
+            else if (letter == "a" || letter == "a." || letter == "A" || letter == "A.") {
+                noteNum = 9;
+            }
+            else if (letter == "b" || letter == "b." || letter == "B" || letter == "B.") {
+                noteNum = 11;
+            }
+            else {
+                noteNum = 0;
+            }
+
+            if (noteNum < 0) {
+                noteNum = 0;
+            }
+            if (sharpFlat == "sharp" || sharpFlat == "Sharp") {
+                noteNum += 1;
+            } else if (sharpFlat == "flat" || sharpFlat == "Flat") {
+                noteNum -= 1;
+            }
+            // noteNum = octave * 7 + noteNum;
+            noteNum = octave * numHalfSteps + noteNum;
+            notesToPlay.push(noteNum);
+            
 
             this.attributes['playOrder'] = notesToPlay;
             this.attributes['index'] = 0;
@@ -218,6 +229,7 @@ var stateHandlers = {
             // TODO Implement multiple chords to be played, only one is allowed atm.
             var chordsToPlay = [];
             var chordName = ""
+            var sharpFlat
             if (typeof this.event.request.intent.slots.Chords.value != "undefined") {
                 var letter = this.event.request.intent.slots.Chords.value;
                 if (letter == "c" || letter == "c." || letter == "C" || letter == "C."){
@@ -243,6 +255,15 @@ var stateHandlers = {
                 }
                 else {
                     chordName += "C";
+                }
+            }
+
+            if (typeof this.event.request.intent.slots.SharpFlat.value != "undefined") {
+                var sharpFlat = this.event.request.intent.slots.SharpFlat.value;
+                if (sharpFlat == "sharp" || sharpFlat == "Sharp") {
+                    chordName += "#"
+                } else if (sharpFlat == "flat" || sharpFlat == "Flat") {
+                    chordName += "b"
                 }
             }
 
@@ -445,30 +466,44 @@ var controller = function () {
 
             // Getting note letter.
             // Assuming title is "Note X"
-            // TODO Fix the mod 7 when adding sharp and flat notes.
             var noteNumber = parseInt(note.title.split(" ")[1]);
-            var noteNumberMod = noteNumber % 7;
+            var noteNumberMod = noteNumber % numHalfSteps;
             var letter = "Bagles";
             switch (noteNumberMod) {
                 case 0:
                     letter = "C";
                     break;
                 case 1:
-                    letter = "D";
+                    letter = "C#/Db";
                     break;
                 case 2:
-                    letter = "E";
+                    letter = "D";
                     break;
                 case 3:
-                    letter = "F";
+                    letter = "D#/Eb";
                     break;
                 case 4:
-                    letter = "G";
+                    letter = "E";
                     break;
                 case 5:
-                    letter = "A";
+                    letter = "F";
                     break;
                 case 6:
+                    letter = "F#/Gb"
+                    break;
+                case 7:
+                    letter = "G";
+                    break;
+                case 8:
+                    letter = "G#/Ab"
+                    break;
+                case 9:
+                    letter = "A";
+                    break;
+                case 10:
+                    letter = "A#/Bb"
+                    break;
+                case 11:
                     letter = "B";
                     break;
             }
