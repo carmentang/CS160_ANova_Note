@@ -16,7 +16,7 @@ var noteImages = [
     {
         // C#/Db
         'title' : 'Note 1',
-        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/c_note-01.png'
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/c_sharp-01.png'
     },
     {
         // D
@@ -26,7 +26,7 @@ var noteImages = [
     {
         // D#/Eb
         'title' : 'Note 3',
-        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/d_note-01.png'
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/d_sharp-01.png'
     },
     {
         // E
@@ -41,7 +41,7 @@ var noteImages = [
     {
         // F#/Gb
         'title' : 'Note 6',
-        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/f_note-01.png'
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/f_sharp-01.png'
     },
     {
         // G
@@ -51,7 +51,7 @@ var noteImages = [
     {
         // G#/Ab
         'title' : 'Note 8',
-        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/g_note-01.png'
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/g_sharp-01.png'
     },
     {
         // A
@@ -61,7 +61,7 @@ var noteImages = [
     {
         // A#/Bb
         'title' : 'Note 10',
-        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/a_note-01.png'
+        'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/note_images/a_sharp-01.png'
     },
     {
         // B
@@ -72,37 +72,37 @@ var noteImages = [
 
 var chordImages = {
     'C major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_chord-01.png' } ,
-    'C minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_chord-01.png' } ,
-    'C# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_chord-01.png' } ,
-    'C# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_chord-01.png' } ,
-    'Db major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_minor_chord-01.png' },
-    'Db minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_minor_chord-01.png' },
-    'D major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_minor_chord-01.png' },
+    'C minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_minor_chord-01.png' } ,
+    'C# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_sharp_major_chord-01.png' } ,
+    'C# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_sharp_minor_chord-01.png' } ,
+    'Db major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_sharp_major_chord-01.png' },
+    'Db minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/c_sharp_minor_chord-01.png' },
+    'D major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_major_chord-01.png' },
     'D minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_minor_chord-01.png' },
-    'D# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_minor_chord-01.png' },
-    'D# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_minor_chord-01.png' },
-    'Eb major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/e_minor_chord-01.png' },
-    'Eb minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/e_minor_chord-01.png' },
+    'D# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_sharp_major_chord-01.png' },
+    'D# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_sharp_minor_chord-01.png' },
+    'Eb major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_sharp_major_chord-01.png' },
+    'Eb minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/d_sharp_minor_chord-01.png' },
     'E major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/e_minor_chord-01.png' },
     'E minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/e_minor_chord-01.png' },
     'F major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_chord-01.png' },
-    'F minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_chord-01.png' },
-    'F# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_chord-01.png' },
-    'F# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_chord-01.png' },
-    'Gb major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_chord-01.png' },
-    'Gb minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_chord-01.png' },
+    'F minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_minor_chord-01.png' },
+    'F# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_sharp_major_chord-01.png' },
+    'F# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_sharp_minor_chord-01.png' },
+    'Gb major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_sharp_major_chord-01.png' },
+    'Gb minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/f_sharp_minor_chord-01.png' },
     'G major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_chord-01.png' },
-    'G minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_chord-01.png' },
-    'G# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_chord-01.png' },
-    'G# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_chord-01.png' },
-    'Ab major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_minor_chord-01.png' },
-    'Ab minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_minor_chord-01.png' },
-    'A major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_minor_chord-01.png' },
+    'G minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_minor_chord-01.png' },
+    'G# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_sharp_major_chord-01.png' },
+    'G# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_sharp_minor_chord-01.png' },
+    'Ab major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_sharp_major_chord-01.png' },
+    'Ab minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/g_sharp_minor_chord-01.png' },
+    'A major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_major_chord-01.png' },
     'A minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_minor_chord-01.png' },
-    'A# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_minor_chord-01.png' },
-    'A# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_minor_chord-01.png' },
-    'Bb major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/b_chord-01.png' },
-    'Bb minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/b_chord-01.png' },
+    'A# major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_sharp_major_chord-01.png' },
+    'A# minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_sharp_minor_chord-01.png' },
+    'Bb major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_sharp_major_chord-01.png' },
+    'Bb minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/a_sharp_minor_chord-01.png' },
     'B major' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/b_chord-01.png' },
     'B minor' : { 'url' : 'https://s3-us-west-1.amazonaws.com/cs160-group27/chord_images/b_chord-01.png' }
 };
